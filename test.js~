@@ -1,0 +1,20 @@
+// vérifier les intéractions autour d'un personnage
+Personnage.prototype.interragir = function(carte){
+
+	
+	if( check==0){
+	context2.fillText("Aucune interraction au alentours",10,10);
+	context2.fillText("Appuyer sur espace pour fermer",10,20);
+	// boucle sur autre personnage carte
+	// si positition au dessus ,dessous, droite ou gauche, interragir
+
+	// boucle sur les pancartes
+	// si position en dessous du sens de lecture de la pancarte, se tourner puis la lire
+	check =1;
+	}else{
+	
+		context2.clearRect(0, 0, canvas2.width, canvas2.height);
+		check =0;
+	}
+
+}

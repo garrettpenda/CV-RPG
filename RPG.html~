@@ -1,0 +1,38 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title> CV RGP </title>
+		<script type="text/javascript" src="Scripts/Personnage.js"></script>
+		<script type="text/javascript" src="Scripts/Pancarte.js"></script>
+		<script type="text/javascript" src="Scripts/Carte.js"></script>
+		
+		
+	</head>
+	
+	<body>	
+	
+		<p id="touche"> Utiliser les fleches directionnelles pour vous déplacer et la touche espace pour parler aux gens ou lire les pancartes. </p>
+
+		<p id="mapname"> Nom de la carte </p>
+		<canvas id="maps" width="1024" height="640" style="border:1px solid black;">
+			Votre navigateur ne supporte pas canvas.
+		</canvas>
+		
+		<canvas id="Test" width="320" height="160" style="border:1px solid black;" >
+			Votre navigateur ne supporte pas canvas.
+		</canvas>
+		
+		<p id="demo"> Afficher des informations </p>
+		<input type="checkbox" id="cbox" checked> Cadrillage</input>
+		<input type="checkbox" id="cbox2" checked> Nom des personnages</input>
+		
+		<!-- execution du script -->
+		<script type="text/javascript" src="Scripts/Main.js"></script>
+	
+
+	</body>
+	
+</html>
