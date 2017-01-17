@@ -27,19 +27,19 @@ setInterval(function() {
 		if( luck > 179 && carte.personnages[p]!=joueur){
 			deplacer( carte.personnages[p],Math.floor(Math.random()*4) ,carte );
 		}
-	}
-
-	// ordonner les personnage par Y croissant
-	carte.personnages.sort(function(a, b){return a.posy-b.posy});
-	
-	// les cases avec des personnages deviennent des murs
-	for( var p=0;p<carte.personnages.length;p++){
-		window["MAP" + carte.numero + "F"][carte.personnages[p].posy][carte.personnages[p].posx]=1;
 	}*/
-
-	
+	// dessiner les cases murs 
+	if (document.getElementById("cbox2").checked){
+		for(j=0;j< carte.hauteur;j++){
+			for(i=0;i< carte.largeur;i++){
+				if(window["MAP" + carte.numero + "F"][j][i]==1){
+					context.fillRect(32*i,32*j,32,32);
+				}
+			}
+		}
+	}
 	document.getElementById("demo").innerHTML = " X : " + joueur.posx + " Y : " + joueur.posy + "<br>" +  "case X : " + Math.floor( joueur.posx/32) + " case Y : " + Math.floor( joueur.posy/32)  ;
-	
+	document.getElementById("touche").innerHTML = joueur.immobil;
 }, 40);
 
 // Gestion du clavier
