@@ -69,19 +69,30 @@ function deplacer( joueur,sens,carte ){
 		return false;
 	}
 
-	// la case qu'a quitter le personnage n'est plus un mur
-	window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx]=0;
+	// la case qu'a quitter le personnage n'est plus un mur si ce nest pas une case changement de map
+	if( String(window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx]).length==1 ){
+		window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx]=0;
+	}
 
-	// la case sur laquelle va le personnage devient un mur
+	// la case sur laquelle va le personnage devient un mur si ce nest pas une case changement de map
 	// evite que deux perso qui bouge en meme temps puisse aller sur la meme case
+	// NOTE : deux personnage peuvent aller en meme temps sur une case changement de map
 	if (sens ==0){ // bas
-		window["MAP" + carte.numero + "F"][joueur.posy+1][joueur.posx]=1;
+		if( String(window["MAP" + carte.numero + "F"][joueur.posy+1][joueur.posx]).length==1 ){
+			window["MAP" + carte.numero + "F"][joueur.posy+1][joueur.posx]=1;
+		}
 	}else if(sens ==1){ // gauche	
-		window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx-1]=1;
+		if( String(window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx-1]).length==1 ){
+			window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx-1]=1;
+		}
 	}else if(sens ==2){ // droite
-		window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx+1]=1;
+		if( String(window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx+1]).length==1 ){
+			window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx+1]=1;
+		}
 	}else if(sens ==3){ // haut
-		window["MAP" + carte.numero + "F"][joueur.posy-1][joueur.posx]=1;
+		if( String(window["MAP" + carte.numero + "F"][joueur.posy-1][joueur.posx]).length==1 ){
+			window["MAP" + carte.numero + "F"][joueur.posy-1][joueur.posx]=1;
+		}
 	}
 	joueur.immobil = false;
 	joueur.direction = sens;
@@ -116,12 +127,8 @@ function deplacer( joueur,sens,carte ){
 
 	}, 40);
 	
-	// TODO
-	// verifier sur collison map si changement de map
-	// si oui, changer map
+	
 }
-
-
 
 // TODO trouver un ovale pour afficher le texte
 // vérifier les intéractions autour d'un personnage
@@ -139,28 +146,28 @@ Personnage.prototype.interragir = function(carte){
 			if( (carte.personnages[p].posy - this.posy == 0) && (carte.personnages[p].posx - this.posx == 1)){
 				texte = carte.personnages[p].texte;
 				carte.personnages[p].direction = 1;
-				carte.personnages[p].immobil = false;tupeuxbouger=p;
+				carte.personnages[p].immobil = false;
 				this.direction = 2;
 				break;
 			// un personnage a gauche
 			}else if( (carte.personnages[p].posy - this.posy == 0) && (carte.personnages[p].posx - this.posx == -1)){
 				texte = carte.personnages[p].texte;
 				carte.personnages[p].direction = 2;
-				carte.personnages[p].immobil = false;tupeuxbouger=p;
+				carte.personnages[p].immobil = false;
 				this.direction = 1;
 				break;
 			// un personnage en bas ( le haut et le bas sont inversé )
 			}else if( (carte.personnages[p].posy - this.posy == 1) && (carte.personnages[p].posx - this.posx == 0)){
 				texte = carte.personnages[p].texte;
 				carte.personnages[p].direction = 3;
-				carte.personnages[p].immobil = false;tupeuxbouger=p;
+				carte.personnages[p].immobil = false;
 				this.direction = 0;
 				break;
 			// un personnage en haut du joueur
 			}else if( (carte.personnages[p].posy - this.posy == -1) && (carte.personnages[p].posx - this.posx == 0)){
 				texte = carte.personnages[p].texte;
 				carte.personnages[p].direction = 0;
-				carte.personnages[p].immobil = false;tupeuxbouger=p;
+				carte.personnages[p].immobil = false;
 				this.direction = 3;
 				break;
 			}else{
@@ -226,8 +233,12 @@ Personnage.prototype.interragir = function(carte){
 	// fermeture dialogue
 	}else{
 		context2.clearRect(0, 0, canvas2.width, canvas2.height);
-		this.immobil = true;
-		carte.personnages[tupeuxbouger].immobil = true;
+		//this.immobil = true;
+		for( var p=0;p<carte.personnages.length;p++){
+			carte.personnages[p].immobil = true;
+		}
+		// techniquement, ca ne permet de bouger que au personnage auquel on a parlé
+		// mais l'ordre peut varier pendant le dialogue si lordre des personnages selon Y change 
 		textcount=0;
 		textetaille=1;
 	}
@@ -272,7 +283,6 @@ Personnage.prototype.deplacerbis = function( carte,sens ){
 				default:
 			}
 			
-			carte.dessiner();
 			
 			if ( this.step%4 == 0 ){
 				this.step=0;

@@ -11,7 +11,6 @@ var textcount=0;
 var textetaille=0;
 var splited = [];
 var splitedbis = [];
-var tupeuxbouger=0;
 
 // définition de la carte
 var carte = new Map("01");
@@ -28,19 +27,21 @@ setInterval(function() {
 			deplacer( carte.personnages[p],Math.floor(Math.random()*4) ,carte );
 		}
 	}*/
-	// dessiner les cases murs 
-	if (document.getElementById("cbox2").checked){
-		for(j=0;j< carte.hauteur;j++){
-			for(i=0;i< carte.largeur;i++){
-				if(window["MAP" + carte.numero + "F"][j][i]==1){
-					context.fillRect(32*i,32*j,32,32);
-				}
-			}
-		}
+
+
+	// verifier sur collison map si changement de map
+	if(String(window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx]).length==10 && joueur.immobil){
+		var splitdd = window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx].split("/");
+		carte = new Map(splitdd[0]);
+		joueur.posx = Number(splitdd[1]);
+		joueur.posy = Number(splitdd[2]);
+		joueur.direction = Number(splitdd[3]);
+		window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx]=1;
 	}
-	document.getElementById("demo").innerHTML = " X : " + joueur.posx + " Y : " + joueur.posy + "<br>" +  "case X : " + Math.floor( joueur.posx/32) + " case Y : " + Math.floor( joueur.posy/32)  ;
-	document.getElementById("touche").innerHTML = joueur.immobil;
-}, 100);
+		
+	document.getElementById("demo").innerHTML = " X : " + joueur.posx + " Y : " + joueur.posy + "<br>" +  "case X : " + Math.floor( joueur.posx/32) + " case Y : " + Math.floor( joueur.posy/32)+ "<br>" ;
+	
+}, 40);
 
 // Gestion du clavier
 window.onkeydown = function(event) {
@@ -100,3 +101,5 @@ window.onkeydown = function(event) {
 
 	return false;
 }
+
+

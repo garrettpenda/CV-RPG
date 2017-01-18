@@ -21,15 +21,16 @@ function Map(numero){
 	this.personnages.sort(function(a, b){return a.posy-b.posy});
 
 	// les cases avec des personnages deviennent des murs
-	for( var p=0;p<this.personnages.length;p++){
+	/*for( var p=0;p<this.personnages.length;p++){
 		window["MAP" + this.numero + "F"][this.personnages[p].posy][this.personnages[p].posx]=1;
-	}
+	}*/
 }
 
 // changer de carte
 Map.prototype.changer = function(numero){
 	carte = new Map(numero);
 }
+
 
 // fonction dessiner couche
 function dessinermatrice( matrice,imageurl ){
@@ -78,6 +79,28 @@ Map.prototype.dessiner = function(){
 			var sy = 32*(Math.floor( ( this.pancartes[i].numtile-1)/nbx));
 			context.drawImage(this.pancartes[i].image, sx, sy, 32, 32, 32*this.pancartes[i].posx, 32*this.pancartes[i].posy, 32, 32);
 		}
+	}
+
+	// dessiner les fleches de changement de map 
+	for(j=0;j< carte.hauteur;j++){
+		for(i=0;i< carte.largeur;i++){
+			if( String(window["MAP" + carte.numero + "F"][j][i]).length==10){// NN/XX/YY/S
+					
+				var splitdd = window["MAP" + carte.numero + "F"][j][i].split("/");
+				var numtile = Number(splitdd[3])*12 +1;
+
+				var image = new Image();
+				image.src = "./Images/Cartes/arrow.png" ;
+				var nbx = image.width/32;
+				var nby = image.height/32;
+				var nbmax = nbx * nby;
+				if( numtile-1 < nbmax){
+					var sx = 32*((numtile-1)%nbx);
+					var sy = 32*(Math.floor( ( numtile-1)/nbx));
+					context.drawImage(image, sx, sy, 32, 32, 32*i, 32*j, 32, 32);
+				}
+			}
+		}
 	}	
 
 	// dessiner les personnages
@@ -91,6 +114,17 @@ Map.prototype.dessiner = function(){
 	// dessiner le decor 1er plan ( E )
 	dessinermatrice(window["MAP" + this.numero + "E"], window["MAP" + this.numero][4]);
 	
+	// dessiner les cases murs 
+	if (document.getElementById("cbox2").checked){
+		for(j=0;j< carte.hauteur;j++){
+			for(i=0;i< carte.largeur;i++){
+				if(window["MAP" + carte.numero + "F"][j][i]==1){
+					context.fillRect(32*i,32*j,32,32);
+				}
+			}
+		}
+	}
+
 	// dessiner le cadrillage
 	if (document.getElementById("cbox").checked){
 		for (i=1;i<carte.hauteurpx;i++){
@@ -107,16 +141,6 @@ Map.prototype.dessiner = function(){
 		}
 	}
 
-	// dessiner les cases murs 
-	if (document.getElementById("cbox2").checked){
-		for(j=0;j< this.hauteur;j++){
-			for(i=0;i< this.largeur;i++){
-				if(window["MAP" + this.numero + "F"][j][i]==1){
-					context.fillRect(32*i,32*j,32,32);
-				}
-			}
-		}
-	}
 
 }
 
@@ -149,7 +173,7 @@ var MAP03B =[[ 1, 2, 3, 4, 5, 6, 7, 8, 9,10],
 // ===================================================
 		   
 // définition des sprites		   
-var MAP01 = ["chemin.png","decors2.png","decors2.png","decors2.png","arrow.png"];
+var MAP01 = ["chemin.png","decors2.png","decors2.png","decors2.png","decors2.png"];
 
 // liste des personnages
 var MAP01PERSO = [joueur,sheila,tony];
@@ -226,38 +250,38 @@ var MAP01C=[[   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  
 	    [   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1],];
 
 // decor 1er plan		
-var MAP01E=[[   0,   0,   0,   0,   0,   0,  37,  37,  37,   0,   0,   0,   0,   0,   0,   0],
+var MAP01E=[[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  25],
-	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  25],
-	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  25],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-	    [   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,   0,   0,   0,   0,   0,   0],];		
+	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],];		
 
-// TODO collision	MAP05XXYYD		
-var MAP01F=[[   1,   1,   1,   1,   1,   1,   0,   0,   0,   1,   1,   1,   1,   1,   1,   1],
+// collision	
+var MAP01F=[[   1,   1,   1,   1,   1,   1,   "02/06/13/3",   "02/07/13/3",   "02/08/13/3",   1,   1,   1,   1,   1,   1,   1],
 	    [   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   0,   0,   0,   0,   1],
 	    [   1,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   0,   0,   0,   0,   1],
 	    [   1,   0,   1,   1,   1,   1,   0,   0,   0,   0,   1,   0,   0,   0,   0,   1],
 	    [   1,   0,   0,   0,   0,   1,   0,   0,   0,   1,   1,   1,   1,   1,   0,   1],
 	    [   1,   0,   0,   0,   0,   1,   0,   0,   0,   1,   1,   1,   1,   0,   0,   1],
-	    [   1,   1,   1,   0,   0,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-	    [   1,   1,   1,   0,   0,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+	    [   1,   1,   1,   0,   0,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   "02/14/06/2"],
+	    [   1,   1,   1,   0,   0,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   "02/14/07/2"],
 	    [   1,   1,   1,   0,   0,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   1,   1,   1,   0,   0,   1,   0,   0,   0,   1,   1,   1,   1,   1,   1,   1],
 	    [   1,   1,   1,   0,   0,   1,   0,   0,   0,   1,   1,   1,   1,   1,   1,   1],
 	    [   1,   0,   0,   0,   0,   1,   0,   0,   0,   1,   1,   1,   1,   1,   1,   1],
 	    [   1,   0,   0,   0,   0,   1,   0,   0,   0,   1,   1,   1,   1,   1,   1,   1],
 	    [   1,   0,   0,   0,   0,   1,   0,   0,   0,   1,   1,   1,   1,   1,   1,   1],
-	    [   1,   1,   1,   1,   1,   1,   0,   0,   0,   1,   1,   1,   1,   1,   1,   1],];
+	    [   1,   1,   1,   1,   1,   1,   "02/06/01/0",   "02/07/01/0",   "02/08/01/0",   1,   1,   1,   1,   1,   1,   1],];
 
 // ===================================================		   
 // ====================== MAP 02 =====================
@@ -270,7 +294,7 @@ MAP02 = ["chemin.png","decors2.png","decors2.png","decors2.png","arrow.png"];
 var MAP02PERSO = [joueur];
 
 // liste des pancartes
-var MAP02PANCARTE = [pancarte];
+var MAP02PANCARTE = [pancarte2];
 			 
 // fond			  
 var MAP02A=[[2, 2, 2, 2, 2, 2, 2, 2, 2,  2,  2,  2,  2,  2,  2, 2],
@@ -358,7 +382,7 @@ var MAP02E=[[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],];		
 
 // collision			
-var MAP02F=[[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+var MAP02F=[[   0,   0,   0,   0,   0,   0,   "01/06/13/3",   "01/07/13/3",   "01/08/13/3",   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
@@ -372,8 +396,8 @@ var MAP02F=[[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-	    [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],];
+	    [   0,   0,   0,   0,   0,   0,   "01/06/01/0",   "01/07/01/0",   "01/08/01/0",   0,   0,   0,   0,   0,   0,   0],];
 
-// TODO faire toute les maps vierges
+// TODO faire toute les maps vierges avec les changements de map et les pancartes
 
 			

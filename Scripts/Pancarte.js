@@ -23,3 +23,4 @@ function Pancarte(url,numtile,x,y,direction,texte){
 
 // map 01
 var pancarte = new Pancarte('decors2.png',147,9,5,0,"Année 2013 // Ville de Nice // Fac de science de Valrose.")
+var pancarte2 = new Pancarte('decors2.png',147,5,13,0,"Année 2014 // Ville de Nice // Fac de science de Valrose.")
