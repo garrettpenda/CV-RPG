@@ -13,7 +13,7 @@ var splited = [];
 var splitedbis = [];
 
 // définition de la carte
-var carte = new Map("01");
+var carte = new Map("10");
 
 // dessiner la maps ( 60fps )
 setInterval(function() {

@@ -13,7 +13,7 @@ var splited = [];
 var splitedbis = [];
 
 // définition de la carte
-var carte = new Map("01");
+var carte = new Map("08");
 
 // dessiner la maps ( 60fps )
 setInterval(function() {
@@ -21,26 +21,24 @@ setInterval(function() {
 	carte.dessiner();
 
 	// déplacer les pnj aléatoirement
-	/*for( var p=0;p<carte.personnages.length;p++){
+	for( var p=0;p<carte.personnages.length;p++){
 		var luck = Math.floor((Math.random() * 180) + 1);
 		if( luck > 179 && carte.personnages[p]!=joueur){
 			deplacer( carte.personnages[p],Math.floor(Math.random()*4) ,carte );
 		}
-	}*/
+	}
 
 
 	// verifier sur collison map si changement de map
 	if(String(window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx]).length==10 && joueur.immobil){
 		var splitdd = window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx].split("/");
-		
 		joueur.posx = Number(splitdd[1]);
 		joueur.posy = Number(splitdd[2]);
 		joueur.direction = Number(splitdd[3]);
 		carte = new Map(splitdd[0]);
-		//window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx]=1;
 	}
 		
-	document.getElementById("demo").innerHTML = " X : " + joueur.posx + " Y : " + joueur.posy + "<br>" +  "case X : " + Math.floor( joueur.posx/32) + " case Y : " + Math.floor( joueur.posy/32)+ "<br>" ;
+	document.getElementById("demo").innerHTML = " X : " + Math.floor(joueur.posx) + " Y : " + Math.floor(joueur.posy);
 	
 }, 40);
 
