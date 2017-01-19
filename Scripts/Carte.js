@@ -24,6 +24,10 @@ function Map(numero){
 	for( var p=0;p<this.personnages.length;p++){
 		window["MAP" + this.numero + "F"][this.personnages[p].posy][this.personnages[p].posx]=1;
 	}
+
+	for( var p=0;p<this.pancartes.length;p++){
+		window["MAP" + this.numero + "F"][this.pancartes[p].posy][this.pancartes[p].posx]=1;
+	}
 }
 
 // changer de carte

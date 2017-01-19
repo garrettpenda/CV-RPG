@@ -21,9 +21,9 @@ function Map(numero){
 	this.personnages.sort(function(a, b){return a.posy-b.posy});
 
 	// les cases avec des personnages deviennent des murs
-	/*for( var p=0;p<this.personnages.length;p++){
+	for( var p=0;p<this.personnages.length;p++){
 		window["MAP" + this.numero + "F"][this.personnages[p].posy][this.personnages[p].posx]=1;
-	}*/
+	}
 }
 
 // changer de carte
