@@ -25,6 +25,7 @@ function Map(numero){
 		window["MAP" + this.numero + "F"][this.personnages[p].posy][this.personnages[p].posx]=1;
 	}
 
+	// les cases avec des pancartes deviennent des murs
 	for( var p=0;p<this.pancartes.length;p++){
 		window["MAP" + this.numero + "F"][this.pancartes[p].posy][this.pancartes[p].posx]=1;
 	}
@@ -100,7 +101,13 @@ Map.prototype.dessiner = function(){
 				}
 			}
 		}
-	}	
+	}
+
+	
+	// reorganiser les personnages dabors
+	this.personnages.sort(function (a, b) {
+  		return a.posy - b.posy;
+	});
 
 	// dessiner les personnages
 	for(var i = 0 ; i < this.personnages.length ; i++) {

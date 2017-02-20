@@ -25,14 +25,10 @@ function Map(numero){
 		window["MAP" + this.numero + "F"][this.personnages[p].posy][this.personnages[p].posx]=1;
 	}
 
+	// les cases avec des pancartes deviennent des murs
 	for( var p=0;p<this.pancartes.length;p++){
 		window["MAP" + this.numero + "F"][this.pancartes[p].posy][this.pancartes[p].posx]=1;
 	}
-}
-
-// changer de carte
-Map.prototype.changer = function(numero){
-	carte = new Map(numero);
 }
 
 
@@ -105,9 +101,13 @@ Map.prototype.dessiner = function(){
 				}
 			}
 		}
-	}	
+	}
 
 	// dessiner les personnages
+	// on reorganise les personnages dabors
+	this.personnages.sort(function (a, b) {
+  		return a.posy - b.posy;
+	});
 	for(var i = 0 ; i < this.personnages.length ; i++) {
 		context.drawImage( this.personnages[i].image, 32*(this.personnages[i].step %4) , 48*this.personnages[i].direction, 32, 48, 32*this.personnages[i].posx , 32*this.personnages[i].posy -32, 32, 48);
 	}

@@ -1,6 +1,17 @@
-
+var DIRECTION = {
+	"BAS"    : 0,
+	"GAUCHE" : 1,
+	"DROITE" : 2,
+	"HAUT"   : 3
+}
+var nomperso = "";
+var texte="";
+var textcount=0;
+var textetaille=0;
+var splited = [];
+var splitedbis = [];
 // définir un personnage
-function Personnage(name,url,x,y,direction,step,immobil,texte){
+function Personnage(name,url,x,y,direction,step,canmove,texte){
 
 	// Analyse des données
 	this.image = new Image();
@@ -10,11 +21,11 @@ function Personnage(name,url,x,y,direction,step,immobil,texte){
 		}
 	}
 	this.name = name;
-	this.image.src = "./Images/Personnages/" +url ;
+	this.image.src = "./Images/Personnages/" + url ;
 	this.posx = x;
 	this.posy = y;
 	this.direction = direction;
-	this.immobil = immobil;
+	this.canmove = canmove;
 	this.step = step;
 	this.texte = texte;
 }
@@ -30,89 +41,81 @@ Personnage.prototype.changer = function(url){
 		}
 	}
 
-	this.image.src = url ;
+	this.image.src = "./Images/Personnages/" + url ;
 }
 
 // vérifier les collisiosns
 Personnage.prototype.collision = function(sens,carte){
-	// bas
-	if ( sens==0 && ( window["MAP" + carte.numero + "F"][this.posy+1][this.posx]==1 || (this.posy+1)> carte.hauteur ) ){
+	if ( sens==DIRECTION.BAS && ( window["MAP" + carte.numero + "F"][this.posy+1][this.posx]==1 || (this.posy+1)> carte.hauteur ) ){
+		return true;  }		
+	else if ( sens==DIRECTION.GAUCHE && ( window["MAP" + carte.numero + "F"][this.posy][this.posx-1]== 1 || (this.posx-1)< 0 )){
 		return true;  }
-	// gauche		
-	else if ( sens==1 && ( window["MAP" + carte.numero + "F"][this.posy][this.posx-1]== 1 || (this.posx-1)< 0 )){
+	else if ( sens==DIRECTION.DROITE && ( window["MAP" + carte.numero + "F"][this.posy][this.posx+1]== 1 || (this.posx+1)> carte.largeur-0.1 ) ){
 		return true;  }
-	// droite
-	else if ( sens==2 && ( window["MAP" + carte.numero + "F"][this.posy][this.posx+1]== 1 || (this.posx+1)> carte.largeur-0.1 ) ){
+	else if( sens== DIRECTION.HAUT && ( window["MAP" + carte.numero + "F"][this.posy-1][this.posx]== 1 || (this.posy-1) < 0) ){
 		return true;  }
-	// haut	
-	else if( sens== 3 && ( window["MAP" + carte.numero + "F"][this.posy-1][this.posx]== 1 || (this.posy-1) < 0) ){
-		return true;  }
-	// si aucune collision
 	else { 
 		return false; }
 	
 }
 
-// TODO mettre la case du personnage en mode mur ( collision = 1 )
-// TODO faire la méthode en mode prototype
-
 // déplacer un personnage
-function deplacer( joueur,sens,carte ){
+//function deplacer( joueur,sens,carte ){
+Personnage.prototype.deplacer = function(sens,carte,joueur){
 
 	// vérifie que le personnage n'effectue pas déjà un mouvement
-	if(!joueur.immobil  ){
+	if(!this.canmove  ){
 		return false;
 	}
 
 	// vérifie la collision avant le déplacement
-	if ( joueur.collision(sens,carte) ){
+	if ( this.collision(sens,carte) ){
 		return false;
 	}
 
 	// la case qu'a quitter le personnage n'est plus un mur si ce nest pas une case changement de map
-	if( String(window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx]).length==1 ){
-		window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx]=0;
+	if( String(window["MAP" + carte.numero + "F"][this.posy][this.posx]).length==1 ){
+		window["MAP" + carte.numero + "F"][this.posy][this.posx]=0;
 	}
 
 	// la case sur laquelle va le personnage devient un mur si ce nest pas une case changement de map
 	// evite que deux perso qui bouge en meme temps puisse aller sur la meme case
 	// NOTE : deux personnage peuvent aller en meme temps sur une case changement de map
-	if (sens ==0){ // bas
-		if( String(window["MAP" + carte.numero + "F"][joueur.posy+1][joueur.posx]).length==1 ){
-			window["MAP" + carte.numero + "F"][joueur.posy+1][joueur.posx]=1;
+	if (sens ==DIRECTION.BAS){ // bas
+		if( String(window["MAP" + carte.numero + "F"][this.posy+1][this.posx]).length==1 ){
+			window["MAP" + carte.numero + "F"][this.posy+1][this.posx]=1;
 		}
-	}else if(sens ==1){ // gauche	
-		if( String(window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx-1]).length==1 ){
-			window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx-1]=1;
+	}else if(sens ==DIRECTION.GAUCHE){ // gauche	
+		if( String(window["MAP" + carte.numero + "F"][this.posy][this.posx-1]).length==1 ){
+			window["MAP" + carte.numero + "F"][this.posy][this.posx-1]=1;
 		}
-	}else if(sens ==2){ // droite
-		if( String(window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx+1]).length==1 ){
-			window["MAP" + carte.numero + "F"][joueur.posy][joueur.posx+1]=1;
+	}else if(sens ==DIRECTION.DROITE){ // droite
+		if( String(window["MAP" + carte.numero + "F"][this.posy][this.posx+1]).length==1 ){
+			window["MAP" + carte.numero + "F"][this.posy][this.posx+1]=1;
 		}
-	}else if(sens ==3){ // haut
-		if( String(window["MAP" + carte.numero + "F"][joueur.posy-1][joueur.posx]).length==1 ){
-			window["MAP" + carte.numero + "F"][joueur.posy-1][joueur.posx]=1;
+	}else if(sens ==DIRECTION.HAUT){ // haut
+		if( String(window["MAP" + carte.numero + "F"][this.posy-1][this.posx]).length==1 ){
+			window["MAP" + carte.numero + "F"][this.posy-1][this.posx]=1;
 		}
 	}
-	joueur.immobil = false;
-	joueur.direction = sens;
+	this.canmove = false;
+	this.direction = sens;
 	
 	var steps = 0;
 	// lance l'animation
 	var myInterval = setInterval( function(){
 		steps++;
-		// TODO revoir la fonction pour marcher
 		// change la position du joueur
-		if (sens ==0){ // bas
+		if (sens ==DIRECTION.BAS){ 
 			joueur.posy += 0.05;
 			joueur.posy = Number(joueur.posy.toFixed(2));
-		}else if(sens ==1){ // gauche		
+		}else if(sens ==DIRECTION.GAUCHE){	
 			joueur.posx -= 0.05;
 			joueur.posx = Number(joueur.posx.toFixed(2));
-		}else if(sens ==2){ // droite
+		}else if(sens ==DIRECTION.DROITE){
 			joueur.posx += 0.05;
 			joueur.posx = Number(joueur.posx.toFixed(2));
-		}else if(sens ==3){ // haut
+		}else if(sens ==DIRECTION.HAUT){
 			joueur.posy -= 0.05;
 			joueur.posy = Number(joueur.posy.toFixed(2));
 		}
@@ -121,93 +124,107 @@ function deplacer( joueur,sens,carte ){
 		if ( steps%5 == 3){joueur.step=(joueur.step+1)%4}
 		if (steps == 20){
 			joueur.step=0;
-			joueur.immobil = true;
+			joueur.canmove = true;
 			clearInterval(myInterval);
 		}
 
 	}, 40);
 	
-	
 }
 
-// TODO trouver un ovale pour afficher le texte
 // vérifier les intéractions autour d'un personnage
-Personnage.prototype.interragir = function(carte){
+Personnage.prototype.gettexte = function(carte){
 
-	// si le personnage n'est pas déja dans un dialogue
-	if( textcount ==0){
-		
-		// immobilise le personnage
-		this.immobil = false;
+	// texte du perso le plus proche
+	for( var p=0;p<carte.personnages.length;p++){
+		// un personnage a droite
+		if( (carte.personnages[p].posy - this.posy == 0) && (carte.personnages[p].posx - this.posx == 1)){
+			texte = carte.personnages[p].texte;
+			carte.personnages[p].direction = DIRECTION.GAUCHE;
+			this.direction = DIRECTION.DROITE;
+			carte.personnages[p].canmove = false;
+			nomperso = carte.personnages[p].name;
+			break;
+		// un personnage a gauche
+		}else if( (carte.personnages[p].posy - this.posy == 0) && (carte.personnages[p].posx - this.posx == -1)){
+			texte = carte.personnages[p].texte;
+			carte.personnages[p].direction = DIRECTION.DROITE;
+			carte.personnages[p].canmove = false;
+			this.direction = DIRECTION.GAUCHE;
+			nomperso = carte.personnages[p].name;
+			break;
+		// un personnage en bas ( le haut et le bas sont inversé )
+		}else if( (carte.personnages[p].posy - this.posy == 1) && (carte.personnages[p].posx - this.posx == 0)){
+			texte = carte.personnages[p].texte;
+			carte.personnages[p].direction = DIRECTION.HAUT;
+			carte.personnages[p].canmove = false;
+			this.direction = DIRECTION.BAS;
+			nomperso = carte.personnages[p].name;
+			break;
+		// un personnage en haut du joueur
+		}else if( (carte.personnages[p].posy - this.posy == -1) && (carte.personnages[p].posx - this.posx == 0)){
+			texte = carte.personnages[p].texte;
+			carte.personnages[p].direction = DIRECTION.BAS;
+			carte.personnages[p].canmove = false;
+			this.direction = DIRECTION.HAUT;
+			nomperso = carte.personnages[p].name;
+			break;
+		}else{
+			texte = "";
+		}
+	}
 
-		// texte du perso le plus proche
-		for( var p=0;p<carte.personnages.length;p++){
-			// un personnage a droite
-			if( (carte.personnages[p].posy - this.posy == 0) && (carte.personnages[p].posx - this.posx == 1)){
-				texte = carte.personnages[p].texte;
-				carte.personnages[p].direction = 1;
-				carte.personnages[p].immobil = false;
-				this.direction = 2;
+	// texte de la pancarte la plus proche
+	if (texte == ""){
+		for( var p=0;p<carte.pancartes.length;p++){
+			// pancarte vers le bas
+			if( (carte.pancartes[p].direction == DIRECTION.BAS) && (carte.pancartes[p].posy - this.posy == -1) && (carte.pancartes[p].posx - this.posx == 0) ){
+				this.direction = DIRECTION.HAUT;
+				texte = carte.pancartes[p].texte;
+				nomperso = "pancarte";
 				break;
-			// un personnage a gauche
-			}else if( (carte.personnages[p].posy - this.posy == 0) && (carte.personnages[p].posx - this.posx == -1)){
-				texte = carte.personnages[p].texte;
-				carte.personnages[p].direction = 2;
-				carte.personnages[p].immobil = false;
-				this.direction = 1;
+			// pancarte vers le haut
+			}else if( (carte.pancartes[p].direction == DIRECTION.HAUT) && (carte.pancartes[p].posy - this.posy == 1) && (carte.pancartes[p].posx - this.posx == 0) ){
+				this.direction = DIRECTION.BAS;
+				texte = carte.pancartes[p].texte;
+				nomperso = "pancarte";
 				break;
-			// un personnage en bas ( le haut et le bas sont inversé )
-			}else if( (carte.personnages[p].posy - this.posy == 1) && (carte.personnages[p].posx - this.posx == 0)){
-				texte = carte.personnages[p].texte;
-				carte.personnages[p].direction = 3;
-				carte.personnages[p].immobil = false;
-				this.direction = 0;
+			// pancarte vers la gauche
+			}else if( (carte.pancartes[p].direction == DIRECTION.GAUCHE) && (carte.pancartes[p].posy - this.posy == 0) && (carte.pancartes[p].posx - this.posx == 1)  ){
+				this.direction = DIRECTION.DROITE;
+				texte = carte.pancartes[p].texte;nomperso = "pancarte";
 				break;
-			// un personnage en haut du joueur
-			}else if( (carte.personnages[p].posy - this.posy == -1) && (carte.personnages[p].posx - this.posx == 0)){
-				texte = carte.personnages[p].texte;
-				carte.personnages[p].direction = 0;
-				carte.personnages[p].immobil = false;
-				this.direction = 3;
+			// pancarte vers la droite
+			}else if( (carte.pancartes[p].direction == DIRECTION.DROITE) && (carte.pancartes[p].posy - this.posy == 0) && (carte.pancartes[p].posx - this.posx == -1)  ){
+				this.direction = DIRECTION.GAUCHE;
+				texte = carte.pancartes[p].texte;nomperso = "pancarte";
 				break;
 			}else{
 				texte = "";
 			}
 		}
+	}
 
-		// texte de la pancarte la plus proche
-		if (texte == ""){
-			for( var p=0;p<carte.pancartes.length;p++){
-				// pancarte vers le bas
-				if( (carte.pancartes[p].direction ==0) && (carte.pancartes[p].posy - this.posy == -1) && (carte.pancartes[p].posx - this.posx == 0) ){
-					this.direction = 3;
-					texte = carte.pancartes[p].texte;
-					break;
-				// pancarte vers le haut
-				}else if( (carte.pancartes[p].direction ==3) && (carte.pancartes[p].posy - this.posy == 1) && (carte.pancartes[p].posx - this.posx == 0) ){
-					this.direction = 0;
-					texte = carte.pancartes[p].texte;
-					break;
-				// pancarte vers la gauche
-				}else if( (carte.pancartes[p].direction ==1) && (carte.pancartes[p].posy - this.posy == 0) && (carte.pancartes[p].posx - this.posx == 1)  ){
-					this.direction = 2;
-					texte = carte.pancartes[p].texte;
-					break;
-				// pancarte vers la droite
-				}else if( (carte.pancartes[p].direction ==2) && (carte.pancartes[p].posy - this.posy == 0) && (carte.pancartes[p].posx - this.posx == -1)  ){
-					this.direction = 1;
-					texte = carte.pancartes[p].texte;
-					break;
-				}else{
-					texte = "";
-				}
-			}
-		}
+	// ou texte du joueur si il n'y a rien
+	if (texte == ""){
+		texte = this.texte;
+		nomperso = "joueur";
+	}
 
-		// ou texte du joueur si il n'y a rien
-		if (texte == ""){
-			texte = this.texte;
-		}
+	return texte;
+
+}
+
+// TODO trouver un ovale pour afficher le texte
+// afficher le texte
+Personnage.prototype.parler = function(carte){
+
+	// si le personnage n'est pas déja dans un dialogue
+	if( textcount ==0){
+		
+		// immobilise le personnage
+		this.canmove = false;
+		texte = this.gettexte(carte);
 
 		splited = texte.split(" / ");
 		textetaille = splited.length;
@@ -217,7 +234,7 @@ Personnage.prototype.interragir = function(carte){
 		for( var k =0;k<splitedbis.length;k++){
 			context2.fillText( splitedbis[k],10,15+k*15);
 		}
-		context2.fillText( textcount+1 + " / " + textetaille,10,canvas2.height -25);
+		context2.fillText( textcount+1 + " / " + textetaille + " " + nomperso,10,canvas2.height -25);
 		context2.fillText( "espace pour continuer",10,canvas2.height -15);
 		textcount++;
 	// affichage texte intermédiaire du dialogue	
@@ -227,15 +244,14 @@ Personnage.prototype.interragir = function(carte){
 		for( var k =0;k<splitedbis.length;k++){
 			context2.fillText( splitedbis[k],10,15+k*15);
 		}
-		context2.fillText( textcount+1 + " / " + textetaille,10,canvas2.height -25);
+		context2.fillText( textcount+1 + " / " + textetaille+ " " + nomperso,10,canvas2.height -25);
 		context2.fillText( "espace pour continuer",10,canvas2.height -15);
 		textcount++;
 	// fermeture dialogue
 	}else{
 		context2.clearRect(0, 0, canvas2.width, canvas2.height);
-		//this.immobil = true;
 		for( var p=0;p<carte.personnages.length;p++){
-			carte.personnages[p].immobil = true;
+			carte.personnages[p].canmove = true;
 		}
 		// techniquement, ca ne permet de bouger que au personnage auquel on a parlé
 		// mais l'ordre peut varier pendant le dialogue si lordre des personnages selon Y change 
@@ -244,25 +260,29 @@ Personnage.prototype.interragir = function(carte){
 	}
 
 }
+
+
+
+
+
 // -------------------------------------------------
 // ----------- définition des personnages ----------
 // -------------------------------------------------
 
-// changer le nom des image en nom des persos 
 //TODO mettre tous ca dans un document a part peut etre?
-var joueur = new Personnage('Joueur',"Joueur.png",7 ,7 , 0,0,true,"Il n'y a personne avec qui parler ici.")
+var joueur = new Personnage('Joueur',"Joueur.png",7 ,7 , DIRECTION.BAS,0,true,"Il n'y a personne avec qui parler ici.")
 
 // map 01
-var tony = new Personnage('Tony',"Tony.png", 11, 1 , 2 ,0,true,"Bonjour ! Les personnes te parlerons de Garrett. / Si tu es perdu, les pancartes // te donneront le temps et l'endroit où tu te trouves. / Tu devrais aussi aller voir Sheila // pour un autre conseil.")
+var tony = new Personnage('Tony',"Tony.png", 11, 1 , DIRECTION.DROITE ,0,true,"Bonjour ! Les personnes te parlerons de Garrett. / Si tu es perdu, les pancartes // te donneront le temps et l'endroit où tu te trouves. / Tu devrais aussi aller voir Sheila // pour un autre conseil.")
 
-var sheila = new Personnage('Sheila',"Sheila.png", 1, 11 , 2 ,0,true,"Bonjour ! / Tu es à la recherche de Garrett ? / Il est passé par ici il y a 3 ans. / C'est à ce moment que Garrett est // entré en master de physique. / Tu peux partir au Nord vers le futur // pour découvrir ses expériences professionnels. / Ou alors, descendre au Sud vers le passé // pour en apprendre plus sur lui. / Bon jeu !!")
+var sheila = new Personnage('Sheila',"Sheila.png", 1, 11 , DIRECTION.DROITE ,0,true,"Bonjour ! / Tu es à la recherche de Garrett ? / Il est passé par ici il y a 3 ans. / C'est à ce moment que Garrett est // entré en master de physique. / Tu peux partir au Nord vers le futur // pour découvrir ses expériences professionnels. / Ou alors, descendre au Sud vers le passé // pour en apprendre plus sur lui. / Bon jeu !!")
 
 /*
 
 Personnage.prototype.deplacerbis = function( carte,sens ){
 	
-	if(this.immobil){ // vérifie que le personnage n'effectue pas déjà un mouvement
-		this.immobil = false;
+	if(this.canmove){ // vérifie que le personnage n'effectue pas déjà un mouvement
+		this.canmove = false;
 		this.step = 1;
 		var myInterval = setInterval( function(){
 			this.direction = sens;
@@ -286,7 +306,7 @@ Personnage.prototype.deplacerbis = function( carte,sens ){
 			
 			if ( this.step%4 == 0 ){
 				this.step=0;
-				this.immobil = true;
+				this.canmove = true;
 				clearInterval(myInterval);
 			}else{
 				this.step ++;

@@ -37,11 +37,11 @@
 		
 		<p id="demo"> Afficher des informations </p>
 		<input type="checkbox" id="cbox" unchecked> Cadrillage</input>
-		<input type="checkbox" id="cbox2" checked> Nom des personnages</input>
+		<input type="checkbox" id="cbox2" unchecked> Nom des personnages</input>
 		
 		<!-- execution du script -->
-		<script type="text/javascript" src="Scripts/Main.js"></script>
-	
+		<!--<script type="text/javascript" src="Scripts/Main.js"></script>-->
+		<script type="text/javascript" src="sound.js">
 
 	</body>
 	
