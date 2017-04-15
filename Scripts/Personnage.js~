@@ -10,6 +10,7 @@ var textcount=0;
 var textetaille=0;
 var splited = [];
 var splitedbis = [];
+
 // définir un personnage
 function Personnage(name,url,x,y,direction,step,canmove,texte){
 
@@ -41,7 +42,7 @@ Personnage.prototype.changer = function(url){
 		}
 	}
 
-	this.image.src = url ;
+	this.image.src = "./Images/Personnages/" + url ;
 }
 
 // vérifier les collisiosns
@@ -60,8 +61,7 @@ Personnage.prototype.collision = function(sens,carte){
 }
 
 // déplacer un personnage
-//function deplacer( joueur,sens,carte ){
-Personnage.prototype.deplacer = function(sens,carte,joueur){
+Personnage.prototype.deplacer = function(sens,carte){
 
 	// vérifie que le personnage n'effectue pas déjà un mouvement
 	if(!this.canmove  ){
@@ -102,29 +102,30 @@ Personnage.prototype.deplacer = function(sens,carte,joueur){
 	this.direction = sens;
 	
 	var steps = 0;
+	var self = this;
 	// lance l'animation
 	var myInterval = setInterval( function(){
 		steps++;
 		// change la position du joueur
 		if (sens ==DIRECTION.BAS){ 
-			joueur.posy += 0.05;
-			joueur.posy = Number(joueur.posy.toFixed(2));
+			self.posy += 0.05;
+			self.posy = Number(self.posy.toFixed(2));
 		}else if(sens ==DIRECTION.GAUCHE){	
-			joueur.posx -= 0.05;
-			joueur.posx = Number(joueur.posx.toFixed(2));
+			self.posx -= 0.05;
+			self.posx = Number(self.posx.toFixed(2));
 		}else if(sens ==DIRECTION.DROITE){
-			joueur.posx += 0.05;
-			joueur.posx = Number(joueur.posx.toFixed(2));
+			self.posx += 0.05;
+			self.posx = Number(self.posx.toFixed(2));
 		}else if(sens ==DIRECTION.HAUT){
-			joueur.posy -= 0.05;
-			joueur.posy = Number(joueur.posy.toFixed(2));
+			self.posy -= 0.05;
+			self.posy = Number(self.posy.toFixed(2));
 		}
 		
 		// si le joueur a fait une animation complete , stop le mouvement, sinon, continue le mouvement
-		if ( steps%5 == 3){joueur.step=(joueur.step+1)%4}
+		if ( steps%5 == 3){self.step=(self.step+1)%4}
 		if (steps == 20){
-			joueur.step=0;
-			joueur.canmove = true;
+			self.step=0;
+			self.canmove = true;
 			clearInterval(myInterval);
 		}
 
@@ -277,43 +278,5 @@ var tony = new Personnage('Tony',"Tony.png", 11, 1 , DIRECTION.DROITE ,0,true,"B
 
 var sheila = new Personnage('Sheila',"Sheila.png", 1, 11 , DIRECTION.DROITE ,0,true,"Bonjour ! / Tu es à la recherche de Garrett ? / Il est passé par ici il y a 3 ans. / C'est à ce moment que Garrett est // entré en master de physique. / Tu peux partir au Nord vers le futur // pour découvrir ses expériences professionnels. / Ou alors, descendre au Sud vers le passé // pour en apprendre plus sur lui. / Bon jeu !!")
 
-/*
 
-Personnage.prototype.deplacerbis = function( carte,sens ){
-	
-	if(this.canmove){ // vérifie que le personnage n'effectue pas déjà un mouvement
-		this.canmove = false;
-		this.step = 1;
-		var myInterval = setInterval( function(){
-			this.direction = sens;
-			
-			switch(sens){
-				case 0:
-					this.posy += 8;
-					break;
-				case 1:
-					this.posx -= 8;
-					break;
-				case 2:
-					this.posx += 8;
-					break;
-				case 3:
-					this.posy -= 8;
-					break;
-				default:
-			}
-			
-			
-			if ( this.step%4 == 0 ){
-				this.step=0;
-				this.canmove = true;
-				clearInterval(myInterval);
-			}else{
-				this.step ++;
-			}
-		}, 100);
-	}
-	
-}
-*/
 

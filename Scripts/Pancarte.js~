@@ -21,7 +21,6 @@ function Pancarte(url,numtile,x,y,direction,texte){
 // ----------- définition des pancartes ------------
 // -------------------------------------------------
 
-
 var pancarte1 = new Pancarte('decors2.png',147,8,8,0,"Map 01")
 var pancarte2 = new Pancarte('decors2.png',147,8,8,0,"Map 02")
 var pancarte3 = new Pancarte('decors2.png',147,8,8,0,"Map 03")
