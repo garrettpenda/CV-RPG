@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title> image reader </title>
+	</head>
+	
+	<body>	
+
+		<p id="mapname"> Nom de la carte </p>
+		
+		<canvas id="Test" width="320" height="160" style="border:1px solid black;" >
+			Votre navigateur ne supporte pas canvas.
+		</canvas>
+		
+		<!-- execution du script -->
+		<script type="text/javascript">
+			var image = new Image();
+			image.src = "arrow.png";
+
+			var canvas = document.getElementById("Test");
+			var context = canvas.getContext('2d');
+			
+
+			canvas.width = image.width;
+			canvas.height = image.height;
+			context.drawImage(image,0, 0, image.width, image.height);
+
+		
+			for (i=1;i<canvas.height;i++){
+				context.beginPath();
+				context.moveTo(0,32*i);
+				context.lineTo(canvas.width,32*i);
+				context.stroke();
+			}
+			for (i=1;i<canvas.width;i++){
+				context.beginPath();
+				context.moveTo(32*i,0);
+				context.lineTo(32*i,canvas.height);
+				context.stroke();
+			}
+
+		</script>
+
+	</body>
+	
+</html>

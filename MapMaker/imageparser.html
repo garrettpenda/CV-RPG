@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Map Maker </title>
+	</head>
+	
+	<body>	
+
+<input type="text" id="long" value="10" >longueur</input><br>
+<input type="text" id="larg" value="10" >largeur</input><br>
+<br>
+
+<form>
+<input type="radio" name="coffee" id="img1">
+<input type="text" id="image1" value="chemin.png" >image1</input>
+<input type="checkbox" id="cbox1" checked> </input><br>
+
+  <input type="radio" name="coffee" id="img2">
+<input type="text" id="image2" value="decors2.png" >image2</input>
+<input type="checkbox" id="cbox2" checked> </input><br>
+
+  <input type="radio" name="coffee" id="img3">
+<input type="text" id="image3" value="decors2.png" >image3</input>
+<input type="checkbox" id="cbox3" checked> </input><br>
+
+  <input type="radio" name="coffee" id="img4">
+<input type="text" id="image4" value="decors2.png" >image4</input>
+<input type="checkbox" id="cbox4" checked> </input><br>
+
+  <input type="radio" name="coffee" id="img5">
+<input type="text" id="image5" value="arrow.png" >image5</input>
+<input type="checkbox" id="cbox5" checked> </input><br>
+</form>
+<br>
+<p id="test">bonjour</p>
+<p id="test2">0</p>
+		<div>
+		<canvas id="map" style="border:1px solid black;" >
+			Votre navigateur ne supporte pas canvas.
+		</canvas>
+
+                <canvas id="image" style="border:1px solid black;" >
+			Votre navigateur ne supporte pas canvas.
+		</canvas>
+
+		<canvas id="select" width="32" height="32" style="border:1px solid black;" >
+			Votre navigateur ne supporte pas canvas.
+		</canvas>
+		</div>
+          <p id="mat1"></p>		
+          <p id="mat2"></p>
+          <p id="mat3"></p>
+          <p id="mat4"></p>
+          <p id="mat5"></p>
+
+		<!-- execution du script -->
+		<script type="text/javascript" src="map.js"></script>
+
+	</body>
+	
+</html>
