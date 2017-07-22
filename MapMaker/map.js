@@ -66,10 +66,10 @@ for(j=0;j< larg;j++){
    var line = [], line2 = [], line3 = [], line4 = [], line5 = [], line6 = [];
    for(i=0;i< long;i++){
       line.push(2);
-      line2.push(1);
-	line3.push(1);
-	line4.push(1);
-	line5.push(1);
+      line2.push(0);
+	line3.push(0);
+	line4.push(0);
+	line5.push(0);
 	line6.push(0);
    }
    map1.push(line);
@@ -137,7 +137,7 @@ if (document.getElementById("cbox6").checked){
 	} else if (document.getElementById("img5").checked) {
 		image.src = "images/" + document.getElementById("image5").value;
 	}else if (document.getElementById("img6").checked) {
-		image.src = "images/" + document.getElementById("image5").value;
+		image.src = "images/arrow.png";
 	}
 	canvas2.width = image.width;
 	canvas2.height = image.height;
@@ -158,21 +158,43 @@ if (document.getElementById("cbox6").checked){
 	}
 
 	// draw the matrice
-	document.getElementById("mat1").innerHTML = "";
-	document.getElementById("mat2").innerHTML = "";
-	document.getElementById("mat3").innerHTML = "";
-	document.getElementById("mat4").innerHTML = "";
-	document.getElementById("mat5").innerHTML = "";
-        document.getElementById("mat6").innerHTML = "";
+	document.getElementById("mat1").innerHTML = "[";
+	document.getElementById("mat2").innerHTML = "[";
+	document.getElementById("mat3").innerHTML = "[";
+	document.getElementById("mat4").innerHTML = "[";
+	document.getElementById("mat5").innerHTML = "[";
+        document.getElementById("mat6").innerHTML = "[";
 	for(j=0;j< map1.length;j++){
+
+    		document.getElementById("mat1").innerHTML = document.getElementById("mat1").innerHTML +"[";
+    		document.getElementById("mat2").innerHTML = document.getElementById("mat2").innerHTML +"[";
+    		document.getElementById("mat3").innerHTML = document.getElementById("mat3").innerHTML +"[";
+    		document.getElementById("mat4").innerHTML = document.getElementById("mat4").innerHTML +"[";
+    		document.getElementById("mat5").innerHTML = document.getElementById("mat5").innerHTML +"[";
+  		document.getElementById("mat6").innerHTML = document.getElementById("mat6").innerHTML +"[";
+		
    		for(i=0;i< map1[0].length;i++){
+			var f = ",";
+			if (i==(map1[0].length-1) && j==map1.length-1){
+				f = "]];";
+			}
+			else if (i==(map1[0].length-1)){
+				f = "],";
+			}
+			
+			var spaces1 = "" + " ".repeat(4 - (map1[j][i].toString().length));
+			var spaces2 = "" + " ".repeat(4 - (map2[j][i].toString().length));
+			var spaces3 = "" + " ".repeat(4 - (map3[j][i].toString().length));
+			var spaces4 = "" + " ".repeat(4 - (map4[j][i].toString().length));
+			var spaces5 = "" + " ".repeat(4 - (map5[j][i].toString().length));
+			var spaces6 = "" + " ".repeat(4 - (map6[j][i].toString().length));
 	
-			document.getElementById("mat1").innerHTML = document.getElementById("mat1").innerHTML + map1[j][i] +",";
-			document.getElementById("mat2").innerHTML = document.getElementById("mat2").innerHTML + map2[j][i] +",";
-			document.getElementById("mat3").innerHTML = document.getElementById("mat3").innerHTML + map3[j][i] +",";
-			document.getElementById("mat4").innerHTML = document.getElementById("mat4").innerHTML + map4[j][i] +",";
-			document.getElementById("mat5").innerHTML = document.getElementById("mat5").innerHTML + map5[j][i] +",";
-			document.getElementById("mat6").innerHTML = document.getElementById("mat6").innerHTML + map6[j][i] +",";
+			document.getElementById("mat1").innerHTML = document.getElementById("mat1").innerHTML + spaces1 + map1[j][i] + f;
+			document.getElementById("mat2").innerHTML = document.getElementById("mat2").innerHTML + spaces2 + map2[j][i] + f;
+			document.getElementById("mat3").innerHTML = document.getElementById("mat3").innerHTML + spaces3 + map3[j][i] + f;
+			document.getElementById("mat4").innerHTML = document.getElementById("mat4").innerHTML + spaces4 + map4[j][i] + f;
+			document.getElementById("mat5").innerHTML = document.getElementById("mat5").innerHTML + spaces5 + map5[j][i] + f;
+			document.getElementById("mat6").innerHTML = document.getElementById("mat6").innerHTML + spaces6 + map6[j][i] + f;
 	
     		}
     		document.getElementById("mat1").innerHTML = document.getElementById("mat1").innerHTML + "<br>";

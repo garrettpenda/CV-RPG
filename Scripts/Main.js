@@ -8,7 +8,7 @@ var context2 = canvas2.getContext('2d');
 context2.font = "15px Arial";
 
 // définition de la carte
-var carte = new Map("08");
+var carte = new Map("09");
 
 // dessiner la maps ( 60fps )
 setInterval(function() {

@@ -12,7 +12,7 @@ var splited = [];
 var splitedbis = [];
 
 // définir un personnage
-function Personnage(name,url,x,y,direction,step,canmove,texte){
+function Personnage(name,url,x,y,direction,step,canmove,immobil,texte){
 
 	// Analyse des données
 	this.image = new Image();
@@ -29,6 +29,7 @@ function Personnage(name,url,x,y,direction,step,canmove,texte){
 	this.canmove = canmove;
 	this.step = step;
 	this.texte = texte;
+	this.immobil = immobil;
 }
 
 // changer l'apparence d'un personnage ( complement inutile pour le moment )
@@ -64,7 +65,7 @@ Personnage.prototype.collision = function(sens,carte){
 Personnage.prototype.deplacer = function(sens,carte){
 
 	// vérifie que le personnage n'effectue pas déjà un mouvement
-	if(!this.canmove  ){
+	if(!this.canmove || this.immobil ){
 		return false;
 	}
 
@@ -270,13 +271,18 @@ Personnage.prototype.parler = function(carte){
 // ----------- définition des personnages ----------
 // -------------------------------------------------
 
-//TODO mettre tous ca dans un document a part peut etre?
-var joueur = new Personnage('Joueur',"Joueur.png",7 ,2 , DIRECTION.BAS,0,true,"Il n'y a personne avec qui parler ici.")
+// TODO proposer à des gens réels de laisser leur coordonnées.
+// TODO mettre tous ca dans un document a part peut etre?
+var joueur = new Personnage('Joueur',"Joueur.png",2 ,14 , DIRECTION.BAS,0,true,false,"Il n'y a personne avec qui parler ici.")
 
 // map 01
-var tony = new Personnage('Tony',"Tony.png", 11, 1 , DIRECTION.DROITE ,0,true,"Bonjour ! Les personnes te parlerons de Garrett. / Si tu es perdu, les pancartes // te donneront le temps et l'endroit où tu te trouves. / Tu devrais aussi aller voir Sheila // pour un autre conseil.")
+var tony = new Personnage('Tony',"Tony.png", 11, 1 , DIRECTION.DROITE ,0,true,false,"Bonjour ! Les personnes te parlerons de Garrett. / Si tu es perdu, les pancartes // te donneront le temps et l'endroit où tu te trouves. / Tu devrais aussi aller voir Sheila // pour un autre conseil.")
 
-var sheila = new Personnage('Sheila',"Sheila.png", 1, 11 , DIRECTION.DROITE ,0,true,"Bonjour ! / Tu es à la recherche de Garrett ? / Il est passé par ici il y a 3 ans. / C'est à ce moment que Garrett est // entré en master de physique. / Tu peux partir au Nord vers le futur // pour découvrir ses expériences professionnels. / Ou alors, descendre au Sud vers le passé // pour en apprendre plus sur lui. / Bon jeu !!")
+var sheila = new Personnage('Sheila',"Sheila.png", 1, 11 , DIRECTION.DROITE ,0,true,false,"Bonjour ! / Tu es à la recherche de Garrett ? / Il est passé par ici il y a 3 ans. / C'est à ce moment que Garrett est // entré en master de physique. / Tu peux partir au Nord vers le futur // pour découvrir ses expériences professionnels. / Ou alors, descendre au Sud vers le passé // pour en apprendre plus sur lui. / Bon jeu !!")
 
+var Constant = new  Personnage('Constant',"Sheila.png", 16, 10 , DIRECTION.DROITE ,0,true,true,"Bonjour ! / Je m'apelle Constant. / Moi et Garrett etions en // license de physique ensemble. / Tu es actuellement // sur le parc de Valrose. / Garrett jouait avec nous a // la bellote contree pendant // ses heures de permanence // avec nous ici. / D'ailleurs, ca lui manque beaucoup, // joue avec lui si tu as l'occasion.")
+
+var Romain = new Personnage('Romain',"Sheila.png", 17, 11 , DIRECTION.HAUT ,0,true,true,"Ma main n'est pas geniale, // j'espere que mon partenaire // a un meilleur jeu.");
+var Jeremie = new Personnage('Jeremie',"Sheila.png", 17, 9 , DIRECTION.BAS ,0,true,true,"Atout a coeur !!!")
 
 
