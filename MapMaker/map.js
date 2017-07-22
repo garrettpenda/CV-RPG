@@ -32,6 +32,8 @@ canvas.addEventListener('click', function(event) {
 		map4[numbery][numberx] =  document.getElementById("test2").innerHTML;
 	} else if (document.getElementById("img5").checked) {
 		map5[numbery][numberx] =  document.getElementById("test2").innerHTML;
+	}else if (document.getElementById("img6").checked) {
+		map6[numbery][numberx] =  1 - map6[numbery][numberx];
 	}
 
 }, false);
@@ -59,20 +61,23 @@ var map2=[];
 var map3=[];
 var map4=[];
 var map5=[];
+var map6=[];
 for(j=0;j< larg;j++){
-   var line = [], line2 = [], line3 = [], line4 = [], line5 = [];
+   var line = [], line2 = [], line3 = [], line4 = [], line5 = [], line6 = [];
    for(i=0;i< long;i++){
       line.push(2);
       line2.push(1);
 	line3.push(1);
 	line4.push(1);
 	line5.push(1);
+	line6.push(0);
    }
    map1.push(line);
    map2.push(line2);
    map3.push(line3);
    map4.push(line4);
    map5.push(line5);
+   map6.push(line6);
 }
 
 // dessiner la maps ( 60fps )
@@ -94,6 +99,17 @@ if (document.getElementById("cbox4").checked){
 if (document.getElementById("cbox5").checked){
 	dessinermatrice(map5, document.getElementById("image5").value);
 }
+
+	// dessiner les cases murs 
+if (document.getElementById("cbox6").checked){
+	for(j=0;j< map6.length;j++){
+		for(i=0;i< map6[0].length;i++){
+			if(map6[j][i]==1){
+				context.fillRect(32*i,32*j,32,32);
+			}
+		}
+	}
+}	
 	// draw the lines on the images
 	for (i=1;i<canvas.height;i++){
 		context.beginPath();
@@ -120,6 +136,8 @@ if (document.getElementById("cbox5").checked){
 		image.src = "images/" + document.getElementById("image4").value;
 	} else if (document.getElementById("img5").checked) {
 		image.src = "images/" + document.getElementById("image5").value;
+	}else if (document.getElementById("img6").checked) {
+		image.src = "images/" + document.getElementById("image5").value;
 	}
 	canvas2.width = image.width;
 	canvas2.height = image.height;
@@ -145,6 +163,7 @@ if (document.getElementById("cbox5").checked){
 	document.getElementById("mat3").innerHTML = "";
 	document.getElementById("mat4").innerHTML = "";
 	document.getElementById("mat5").innerHTML = "";
+        document.getElementById("mat6").innerHTML = "";
 	for(j=0;j< map1.length;j++){
    		for(i=0;i< map1[0].length;i++){
 	
@@ -153,6 +172,7 @@ if (document.getElementById("cbox5").checked){
 			document.getElementById("mat3").innerHTML = document.getElementById("mat3").innerHTML + map3[j][i] +",";
 			document.getElementById("mat4").innerHTML = document.getElementById("mat4").innerHTML + map4[j][i] +",";
 			document.getElementById("mat5").innerHTML = document.getElementById("mat5").innerHTML + map5[j][i] +",";
+			document.getElementById("mat6").innerHTML = document.getElementById("mat6").innerHTML + map6[j][i] +",";
 	
     		}
     		document.getElementById("mat1").innerHTML = document.getElementById("mat1").innerHTML + "<br>";
@@ -160,6 +180,7 @@ if (document.getElementById("cbox5").checked){
     		document.getElementById("mat3").innerHTML = document.getElementById("mat3").innerHTML + "<br>";
     		document.getElementById("mat4").innerHTML = document.getElementById("mat4").innerHTML + "<br>";
     		document.getElementById("mat5").innerHTML = document.getElementById("mat5").innerHTML + "<br>";
+  		document.getElementById("mat6").innerHTML = document.getElementById("mat6").innerHTML + "<br>";
 	}
 	
 }, 40);
