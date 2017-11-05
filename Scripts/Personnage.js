@@ -48,13 +48,13 @@ Personnage.prototype.changer = function(url){
 
 // vérifier les collisiosns
 Personnage.prototype.collision = function(sens,carte){
-	if ( sens==DIRECTION.BAS && ( window["MAP" + carte.numero + "F"][this.posy+1][this.posx]==1 || (this.posy+1)> carte.hauteur ) ){
+	if ( sens==DIRECTION.BAS && ( carte.matrice[this.posy+1][this.posx]==1 || (this.posy+1)> carte.hauteur ) ){
 		return true;  }		
-	else if ( sens==DIRECTION.GAUCHE && ( window["MAP" + carte.numero + "F"][this.posy][this.posx-1]== 1 || (this.posx-1)< 0 )){
+	else if ( sens==DIRECTION.GAUCHE && ( carte.matrice[this.posy][this.posx-1]== 1 || (this.posx-1)< 0 )){
 		return true;  }
-	else if ( sens==DIRECTION.DROITE && ( window["MAP" + carte.numero + "F"][this.posy][this.posx+1]== 1 || (this.posx+1)> carte.largeur-0.1 ) ){
+	else if ( sens==DIRECTION.DROITE && ( carte.matrice[this.posy][this.posx+1]== 1 || (this.posx+1)> carte.largeur-0.1 ) ){
 		return true;  }
-	else if( sens== DIRECTION.HAUT && ( window["MAP" + carte.numero + "F"][this.posy-1][this.posx]== 1 || (this.posy-1) < 0) ){
+	else if( sens== DIRECTION.HAUT && ( carte.matrice[this.posy-1][this.posx]== 1 || (this.posy-1) < 0) ){
 		return true;  }
 	else { 
 		return false; }
@@ -75,28 +75,28 @@ Personnage.prototype.deplacer = function(sens,carte){
 	}
 
 	// la case qu'a quitter le personnage n'est plus un mur si ce nest pas une case changement de map
-	if( String(window["MAP" + carte.numero + "F"][this.posy][this.posx]).length==1 ){
-		window["MAP" + carte.numero + "F"][this.posy][this.posx]=0;
+	if( String(carte.matrice[this.posy][this.posx]).length==1 ){
+		carte.matrice[this.posy][this.posx]=0;
 	}
 
 	// la case sur laquelle va le personnage devient un mur si ce nest pas une case changement de map
 	// evite que deux perso qui bouge en meme temps puisse aller sur la meme case
 	// NOTE : deux personnage peuvent aller en meme temps sur une case changement de map
 	if (sens ==DIRECTION.BAS){ // bas
-		if( String(window["MAP" + carte.numero + "F"][this.posy+1][this.posx]).length==1 ){
-			window["MAP" + carte.numero + "F"][this.posy+1][this.posx]=1;
+		if( String(carte.matrice[this.posy+1][this.posx]).length==1 ){
+			carte.matrice[this.posy+1][this.posx]=1;
 		}
 	}else if(sens ==DIRECTION.GAUCHE){ // gauche	
-		if( String(window["MAP" + carte.numero + "F"][this.posy][this.posx-1]).length==1 ){
-			window["MAP" + carte.numero + "F"][this.posy][this.posx-1]=1;
+		if( String(carte.matrice[this.posy][this.posx-1]).length==1 ){
+			carte.matrice[this.posy][this.posx-1]=1;
 		}
 	}else if(sens ==DIRECTION.DROITE){ // droite
-		if( String(window["MAP" + carte.numero + "F"][this.posy][this.posx+1]).length==1 ){
-			window["MAP" + carte.numero + "F"][this.posy][this.posx+1]=1;
+		if( String(carte.matrice[this.posy][this.posx+1]).length==1 ){
+			carte.matrice[this.posy][this.posx+1]=1;
 		}
 	}else if(sens ==DIRECTION.HAUT){ // haut
-		if( String(window["MAP" + carte.numero + "F"][this.posy-1][this.posx]).length==1 ){
-			window["MAP" + carte.numero + "F"][this.posy-1][this.posx]=1;
+		if( String(carte.matrice[this.posy-1][this.posx]).length==1 ){
+			carte.matrice[this.posy-1][this.posx]=1;
 		}
 	}
 	this.canmove = false;
@@ -273,16 +273,25 @@ Personnage.prototype.parler = function(carte){
 
 // TODO proposer à des gens réels de laisser leur coordonnées.
 // TODO mettre tous ca dans un document a part peut etre?
-var joueur = new Personnage('Joueur',"Joueur.png",2 ,14 , DIRECTION.BAS,0,true,false,"Il n'y a personne avec qui parler ici.")
+var joueur = new Personnage('Joueur',"Joueur.png",3 ,3 , DIRECTION.BAS,0,true,false,"Il n'y a personne avec qui parler ici.")
 
 // map 01
-var tony = new Personnage('Tony',"Tony.png", 11, 1 , DIRECTION.DROITE ,0,true,false,"Bonjour ! Les personnes te parlerons de Garrett. / Si tu es perdu, les pancartes // te donneront le temps et l'endroit où tu te trouves. / Tu devrais aussi aller voir Sheila // pour un autre conseil.")
+var tony = new Personnage('Tony',"Tony.png", 11, 1 , DIRECTION.DROITE ,0,true,false,"Bonjour ! // Bienvenue dans le CV RPG de Garrett. // Tu y trouvera bien sur / des informations sur sa carrière mais aussi / si tu parles avec les gens, des informations plus personnelles. / Ce jeu est construit comme une frise chronologique. // A savoir que tu te déplace dans sa vie // temporellement de haut en bas et spatialement de gauche à droite. / Si tu veux savoir a quel endroit ou annee tu te trouves, // lis les pancartes. / Tu devrais aussi aller voir Sheila // pour un autre conseil.")
 
-var sheila = new Personnage('Sheila',"Sheila.png", 1, 11 , DIRECTION.DROITE ,0,true,false,"Bonjour ! / Tu es à la recherche de Garrett ? / Il est passé par ici il y a 3 ans. / C'est à ce moment que Garrett est // entré en master de physique. / Tu peux partir au Nord vers le futur // pour découvrir ses expériences professionnels. / Ou alors, descendre au Sud vers le passé // pour en apprendre plus sur lui. / Bon jeu !!")
+var sheila = new Personnage('Sheila',"Sheila.png", 1, 11 , DIRECTION.DROITE ,0,true,false,"Bonjour ! / Tu es à la recherche de Garrett ? / Il est passé par ici il y a 3 ans. / C'est à ce moment que Garrett est // entré en master de physique. / Tu peux partir au Nord vers le futur // pour découvrir ses expériences professionnels. / Ou alors, descendre au Sud vers le passé pour découvrir son cursus. / Si tu veux en apprendre plus sur son caractère, // je te conseille de partir au Sud. // C'est la qu'il a mis le plus danecdote sur lui. / Bon jeu !!")
 
 var Constant = new  Personnage('Constant',"Sheila.png", 16, 10 , DIRECTION.DROITE ,0,true,true,"Bonjour ! / Je m'apelle Constant. / Moi et Garrett etions en // license de physique ensemble. / Tu es actuellement // sur le parc de Valrose. / Garrett jouait avec nous a // la bellote contree pendant // ses heures de permanence // avec nous ici. / D'ailleurs, ca lui manque beaucoup, // joue avec lui si tu as l'occasion.")
 
 var Romain = new Personnage('Romain',"Sheila.png", 17, 11 , DIRECTION.HAUT ,0,true,true,"Ma main n'est pas geniale, // j'espere que mon partenaire // a un meilleur jeu.");
-var Jeremie = new Personnage('Jeremie',"Sheila.png", 17, 9 , DIRECTION.BAS ,0,true,true,"Atout a coeur !!!")
+var Jeremie = new Personnage('Jeremie',"Sheila.png", 17, 9 , DIRECTION.BAS ,0,true,true,"120 coeur.")
+
+var Vincent = new Personnage('Vincent',"Tony.png", 2, 8 , DIRECTION.HAUT ,0,true,true,"Bonjour, je m'apelle Vincent. / J'étais dans le master modelisation et calcul // scientifique avec Garrett. / Moi et Garrett avons gardé contact. // On joue souvent à Starcraft ensemble. / Il joue terran et moi zerg. / Demande lui son battle tag si tu veux ausi jouer avec lui.")
+
+
+var Mederic = new Personnage('Mederic',"Tony.png", 3, 3, DIRECTION.BAS ,0,true,true,"Bonjour, je suis  Mederic, le responsable du master // modélisation et calcul scinetifique ou MCS. / Le but du master est de faire de l'informatique // applique a la physique. // Par exemple, simuler des modeles de populations, //  des torsions de poutres en metal ou // encore des ondes comme de vagues ou des tremblement de terres. / Ce master donc principalement acces sur la pysique // mais avec des notions d'informatiques.")
+
+var Simon = new Personnage('Simon',"Tony.png", 2, 8 , DIRECTION.HAUT ,0,true,true,"Bonjour, je m'apelle Simon. / J'ai rejoint Garrett et Vincent dans le master MCS en deuxième année. / Tu as surement remarqué que cette carte est la même que la précédente. / C'est parce que nos cours étais dans la même salle // sauf qu'il ont réparé l'ascenseur. / Nous n'avions plus à monter à chaque fois les 5 étages à pied. / Quel soulagement !")
+
+var Reparateur = new Personnage('Reparateur',"Tony.png", 5, 2 , DIRECTION.DROITE ,0,true,true,"L'ascenseur est cassé. // Il sera réparé d'ici à l'année prochaine. / Si tu veux en savoir plus sur la classe du M2 // de Garrett, tu vas devoir monter les 4 étages à // pied. / Je sais, c'est long mais Garrett l'as bien // fait pendant toute l'année sans compter les précédentes. / Le pauvre, déjà qu'il se levait à 6h tout les jours // pour avoir son bus...")
 
 

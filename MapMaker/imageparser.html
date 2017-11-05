@@ -5,69 +5,208 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Map Maker </title>
+		<link rel="stylesheet" href="menu.css"/>
 	</head>
 	
 	<body>	
 
-<input type="text" id="long" value="10" >longueur</input><br>
-<input type="text" id="larg" value="10" >largeur</input><br>
-<br>
+<div id="general">
+	<div class="title"> 
+		Paremetres globaux 
+		<input type="button" value="Cacher/Montrer" id="hideshowglobalparameters" onclick="hideshow('globalparameters')" />
+	</div>
+	<div id="globalparameters">
+		<input type="text" id="longueur" value="10" >longueur carte</input><br>
+		<input type="text" id="largeur" value="10" >largeur carte</input><br>
+		<input type="text" id="mapnumber" value="1" >numero carte</input><br>
+		<input type="button" value="Exporter  resultats" id="exportbutton" onclick="exportresults()"/><br>
+		<input id="file" type="file"/><br>
+		<p id="jsonresult">test</p><br>
+		<input type="button" value="augmenter longueur" id="azert" onclick=""/><br>
+		<input type="button" value="augmenter largeur" id="hideaqswsdshowbg" onclick="alert('non disponible')"/><br>
+	</div>
 
-<form>
-<input type="radio" name="coffee" id="img1">
-<input type="text" id="image1" value="chemin.png" >image1</input>
-<input type="checkbox" id="cbox1" checked> </input><br>
+	<div id="mapsandresults">
 
-  <input type="radio" name="coffee" id="img2">
-<input type="text" id="image2" value="decors2.png" >image2</input>
-<input type="checkbox" id="cbox2" checked> </input><br>
-
-  <input type="radio" name="coffee" id="img3">
-<input type="text" id="image3" value="decors2.png" >image3</input>
-<input type="checkbox" id="cbox3" checked> </input><br>
-
-  <input type="radio" name="coffee" id="img4">
-<input type="text" id="image4" value="decors2.png" >image4</input>
-<input type="checkbox" id="cbox4" checked> </input><br>
-
-  <input type="radio" name="coffee" id="img5">
-<input type="text" id="image5" value="arrow.png" >image5</input>
-<input type="checkbox" id="cbox5" checked> </input><br>
-
-  <input type="radio" name="coffee" id="img6">
-<input type="checkbox" id="cbox6" checked> </input>collision<br>
-</form>
-<br>
-<p id="test">bonjour</p>
-<p id="test2">0</p>
-		<div>
-		<canvas id="map" style="border:1px solid black;" >
-			Votre navigateur ne supporte pas canvas.
-		</canvas>
-
-                <canvas id="image" style="border:1px solid black;" >
-			Votre navigateur ne supporte pas canvas.
-		</canvas>
-
-		<canvas id="select" width="32" height="32" style="border:1px solid black;" >
-			Votre navigateur ne supporte pas canvas.
-		</canvas>
+		<div class="title"> 
+			Arriere plan 
+			<input type="button" value="Cacher/Montrer" id="hideshowbg" onclick="hideshow('mapBG')" />
 		</div>
-matrice 1
-          <p id="mat1" style="white-space:pre"></p>	
-matrice 2	
-          <p id="mat2" style="white-space:pre"></p>
-matrice 3
-          <p id="mat3" style="white-space:pre"></p>
-matrice 4
-          <p id="mat4" style="white-space:pre"></p>
-matrice 5
-          <p id="mat5" style="white-space:pre"></p>
-matrice 6
-<p id="mat6" style="white-space:pre"></p>
+		<div id="mapBG">
+			<div class="parameters">
 
-		<!-- execution du script -->
-		<script type="text/javascript" src="map.js"></script>
+				<div class="left">
+					<form id="BGparameters">
+						<input type="checkbox" id="cboxBGcad1" onclick="drawbackgroundimage()" checked>cadrillage1 </input><br>
+						<input type="checkbox" id="cboxBGcad2" onclick="selectnewimageforbackground()" checked>cadrillage2 </input><br>
+
+						<input type="radio" name="BG" id="path" checked onclick="selectnewimageforbackground()"> 
+						<input type="checkbox" id="cboxpath" checked onclick="drawbackgroundimage()"> chemin</input><br>
+
+						<input type="radio" name="BG" id="arrows" onclick="selectnewimageforbackground()">
+						<input type="checkbox" id="cboxarrows" checked onclick="drawbackgroundimage()">fleches </input><br>
+
+						<input type="radio" name="BG" id="collision" onclick="selectnewimageforbackground()">
+						<input type="checkbox" id="cboxcollision" checked onclick="drawbackgroundimage()">collision </input><br>
+				</div>
+
+				<div class="center">
+						<input type="radio" name="BG" id="imgBG1" onclick="selectnewimageforbackground()">
+						<input type="text" id="imageBG1" value="decors2.png" >image1</input>
+						<input type="checkbox" id="cboxBG1" checked onclick="drawbackgroundimage()"> </input><br>
+
+						<input type="radio" name="BG" id="imgBG2" onclick="selectnewimageforbackground()">
+						<input type="text" id="imageBG2" value="decors2.png" >image2</input>
+						<input type="checkbox" id="cboxBG2" checked onclick="drawbackgroundimage()"> </input><br>
+
+						<input type="radio" name="BG" id="imgBG3" onclick="selectnewimageforbackground()">
+						<input type="text" id="imageBG3" value="decors2.png" >image3</input>
+						<input type="checkbox" id="cboxBG3" checked onclick="drawbackgroundimage()"> </input><br>
+
+						<input type="radio" name="BG" id="imgBG4" onclick="selectnewimageforbackground()">
+						<input type="text" id="imageBG4" value="decors2.png" >image4</input>
+						<input type="checkbox" id="cboxBG4" checked onclick="drawbackgroundimage()"> </input><br>
+
+						<input type="radio" name="BG" id="imgBG5" onclick="selectnewimageforbackground()">
+						<input type="text" id="imageBG5" value="decors2.png" >image5</input>
+						<input type="checkbox" id="cboxBG5" checked onclick="drawbackgroundimage()"> </input><br>
+					</form>
+				</div>
+
+				<div class="right">
+					<canvas id="BGselectedTile" width="32" height="32">
+						Votre navigateur ne supporte pas canvas.
+					</canvas>
+					<p id="BGinfo1">info</p>
+					<p id="BGinfo2">info</p>
+					<p id="BGinfo3">info</p>
+					<input type="button" value="reset tile" id="resetbgtile" onclick="resetbgselectedtile()"/><p id="BGtilenumber">tilenumber</p>
+				</div>
+			</div>
+
+			<div class="image">
+				<canvas id="BGimage">
+					Votre navigateur ne supporte pas canvas.
+				</canvas>
+				<br>
+				<a id="downloadBG">telecharger image</a>
+			</div>
+
+			<div class="tileimage">
+                		<canvas id="BGselectedimage" >
+					Votre navigateur ne supporte pas canvas.
+				</canvas>
+			</div>
+
+		</div>
+
+		<div class="title">
+			Premier plan 
+			<input type="button" value="Cacher/Montrer" id="hideshowfg" onclick="hideshow('mapFG')"/>
+		</div>
+		<div id="mapFG">
+			<div class="parameters">
+
+				<div class="left">
+					<form id="FGparameters">
+						<input type="checkbox" id="cboxFGcad1" onclick="drawfirstgroundimage()" checked> cadrillage1</input><br>
+						<input type="checkbox" id="cboxFGcad2" onclick="selectnewimageforfirstground()" checked>cadrillage2 </input><br>
+				</div>
+				<div class="center">
+						<input type="radio" name="FG" id="imgFG1" checked onclick="selectnewimageforfirstground()">
+						<input type="text" id="imageFG1" value="decors2.png" >image1</input>
+						<input type="checkbox" id="cboxFG1" checked> </input><br>
+
+						<input type="radio" name="FG" id="imgFG2" onclick="selectnewimageforfirstground()">
+						<input type="text" id="imageFG2" value="decors2.png" >image2</input>
+						<input type="checkbox" id="cboxFG2" checked> </input><br>
+
+						<input type="radio" name="FG" id="imgFG3" onclick="selectnewimageforfirstground()">
+						<input type="text" id="imageFG3" value="decors2.png" >image3</input>
+						<input type="checkbox" id="cboxFG3" checked> </input><br>
+
+						<input type="radio" name="FG" id="imgFG4" onclick="selectnewimageforfirstground()">
+						<input type="text" id="imageFG4" value="decors2.png" >image4</input>
+						<input type="checkbox" id="cboxFG4" checked> </input><br>
+
+						<input type="radio" name="FG" id="imgFG5" onclick="selectnewimageforfirstground()">
+						<input type="text" id="imageFG5" value="decors2.png" >image5</input>
+						<input type="checkbox" id="cboxFG5" checked> </input><br>
+					</form>
+				</div>
+				<div class="right">
+					<canvas id="FGselectedTile" width="32" height="32">
+					Votre navigateur ne supporte pas canvas.
+					</canvas>
+					<p id="FGinfo1">info</p>
+					<p id="FGinfo2">info</p>
+					<p id="FGinfo3">info</p><input type="button" value="reset tile" id="resetfgtile" onclick="resetfgselectedtile()"/>
+					<p id="FGtilenumber">tilenumber</p>
+				</div>
+			</div>
+
+			<div class="image">
+				<canvas id="FGimage">
+					Votre navigateur ne supporte pas canvas.
+				</canvas>
+				<br>
+				<a id="downloadFG">telecharger image</a>
+			</div>
+
+			<div class="tileimage" width="512" height="512">
+                		<canvas id="FGselectedimage" >
+					Votre navigateur ne supporte pas canvas.
+				</canvas>
+			</div>
+
+		</div>
+
+		<div class="title"> 
+			Resultats
+			<input type="button" value="Cacher/Montrer" id="hideshowresult" onclick="hideshow('mapresult')"/>
+		</div>
+
+		<div id="mapresult"> 	
+			<canvas id="resultImage">
+				Votre navigateur ne supporte pas canvas.
+			</canvas>
+		</div>
+
+	</div>
+
+	<div class="title"> 
+		Matrices arrière plan
+		<input type="button" value="Cacher/Montrer" id="hideshowbgmatrices" onclick="hideshow('BGmatrices')"/>
+	</div>
+
+	<div id="BGmatrices" style="display:none">
+		<p id="matPATH" style="white-space:pre">matrice path</p>	
+		<p id="matARROW" style="white-space:pre">matrice arrow</p>
+		<p id="matCOLLISION" style="white-space:pre">matrice collision</p>		
+		<p id="matBG1" style="white-space:pre">matrice 1</p>	
+		<p id="matBG2" style="white-space:pre">matrice 2</p>
+		<p id="matBG3" style="white-space:pre">matrice 3</p>
+		<p id="matBG4" style="white-space:pre">matrice 4</p>
+		<p id="matBG5" style="white-space:pre">matrice 5</p>
+	</div>
+
+	<div class="title">
+		Matrices premier plan
+		<input type="button" value="Cacher/Montrer" id="hideshowfgmatrices" onclick="hideshow('FGmatrices')"/>
+ 	</div>
+
+	<div id="FGmatrices" style="display:none">
+		<p id="matFG1" style="white-space:pre">matrice 1</p>	
+		<p id="matFG2" style="white-space:pre">matrice 2</p>
+		<p id="matFG3" style="white-space:pre">matrice 3</p>
+		<p id="matFG4" style="white-space:pre">matrice 4</p>
+		<p id="matFG5" style="white-space:pre">matrice 5</p>
+	</div>
+
+</div>
+
+	<!-- execution du script -->
+	<script type="text/javascript" src="mapmaker.js"></script>
 
 	</body>
 	
