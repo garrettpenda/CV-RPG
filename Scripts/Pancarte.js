@@ -23,6 +23,10 @@ var pancarte9 = new Pancarte(2,9,0,"Année 2013 // Ville de Nice // Parc des sci
 var pancarte10 = new Pancarte(9,5,0,"Année 2013 // Ville de Nice // Fac de science de Valrose.");
 var pancarte11 = new Pancarte(8,15,0,"Année 2014 // Ville de Nice // Fac de science de Valrose. // Salle de travail du master 1 MCS.");
 
-var pancarte12 = new Pancarte(4, 0 ,0,"Année 2014 // Ville de Sophia Antipolis // Batiment de physique // RDC");
+var pancarte12 = new Pancarte(4, 0 ,0,"Année 2014 // Ville de Nice // Fac de science de Valrose. // Batiment de physique // RDC");
 
-var pancarte13 = new Pancarte(11,4,0,"Année 2015 // Ville de Nice // Fac de science de Valrose. // Salle de travail du master 2 MCS.");
+var pancarte13 = new Pancarte(4, 0 ,0,"Année 2014 // Ville de Nice // Fac de science de Valrose. // Batiment de physique // 1ere étage");
+var pancarte14 = new Pancarte(4, 0 ,0,"Année 2014 // Ville de Nice // Fac de science de Valrose. // Batiment de physique // 2eme étage");
+var pancarte15 = new Pancarte(4, 0 ,0,"Année 2014 // Ville de Nice // Fac de science de Valrose. // Batiment de physique // 3eme etage");
+var pancarte16 = new Pancarte(4, 0 ,0,"Année 2014 // Ville de Nice // Fac de science de Valrose. // Batiment de physique // 4eme etage");
+var pancarte18 = new Pancarte(7, 9 ,0,"Année 2014 // Sophia Antipolis // INLN");

@@ -10,6 +10,14 @@
 	
 	<body>	
 
+		<style>
+			.parent {
+    			width:512px;
+    			height:512px;
+    			overflow:auto;
+			}
+    	</style>
+
 <div id="general">
 	<div class="title"> 
 		Paremetres globaux 
@@ -93,9 +101,13 @@
 			</div>
 
 			<div class="tileimage">
-                		<canvas id="BGselectedimage" >
-					Votre navigateur ne supporte pas canvas.
-				</canvas>
+                
+				<div class="parent" id ="BGselectedimageDIV">
+                	<canvas id="BGselectedimage" >
+						Votre navigateur ne supporte pas canvas.
+					</canvas>
+				</div>
+
 			</div>
 
 		</div>
@@ -153,8 +165,8 @@
 				<a id="downloadFG">telecharger image</a>
 			</div>
 
-			<div class="tileimage" width="512" height="512">
-                		<canvas id="FGselectedimage" >
+			<div class="parent" id="FGselectedimageDIV">
+                <canvas id="FGselectedimage" >
 					Votre navigateur ne supporte pas canvas.
 				</canvas>
 			</div>

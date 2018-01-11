@@ -8,7 +8,12 @@ var context2 = canvas2.getContext('2d');
 context2.font = "15px Arial";
 
 // définition de la carte
-var carte = MAP12;
+var carte = MAP10;
+// les cases avec des personnages deviennent des murs
+for( var p=0;p<carte.personnages.length;p++){
+	carte.matrice[carte.personnages[p].posy][carte.personnages[p].posx]=1;
+}
+
 carte.dessiner();
 
 // dessiner la maps ( 60fps )
@@ -26,15 +31,11 @@ setInterval(function() {
 
 	// verifier sur collison map si changement de map
 	if(Number.isInteger(joueur.posy) && Number.isInteger(joueur.posx) && String(carte.matrice[joueur.posy][joueur.posx]).length!=1 && joueur.canmove){
-		var splitdd = carte.matrice[joueur.posy][joueur.posx].split("/");
-		joueur.posx = Number(splitdd[1]);
-		joueur.posy = Number(splitdd[2]);
-		joueur.direction = Number(splitdd[3]);
-		carte = window["MAP" + splitdd[0]];
-		//carte = new Map(splitdd[0]);
+		carte.changer(String(carte.matrice[joueur.posy][joueur.posx]));
 	}
 		
 	document.getElementById("demo").innerHTML = " X : " + Math.floor(joueur.posx) + " Y : " + Math.floor(joueur.posy)+ "<br>";
+	document.getElementById("mapname").innerHTML = carte.numero;
 	
 }, 40);
 

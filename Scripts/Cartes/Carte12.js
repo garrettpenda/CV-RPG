@@ -10,7 +10,7 @@ var MAP12COLLISION=[
 [ 1, 0, 0, 0, 0, 0, 1],
 [ 1, 0, 0, 0, 0, 0, 1],
 [ 1, 0, 0, 0, 0, 0, 1],
-[ 1, 1, "13/05/16/0", 1, "11/05/16/0", 1, 1]];
+[ 1, 1, "13/02/04/3", 1, "11/05/16/0", 1, 1]];
 
 // liste des personnages
 var MAP12PERSO = [joueur, Reparateur]; //, Vincent, Mederic];

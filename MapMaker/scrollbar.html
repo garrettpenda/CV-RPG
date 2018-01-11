@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Canvas scroll bar</title>
+	</head>
+<body>
+	<h2 style="color:black"><i>Canvas scroll bar</i></h2>
+    <style>
+        html, body 
+        {
+            width:100%;
+            height:100%;
+            margin:0;
+            overflow:hidden
+
+        }
+#parent {
+    width:512px;
+    height:512px;
+    border:1px solid #000;
+    overflow:auto;
+}
+.canvas {
+    width:auto;
+    border:1px solid #600;
+}
+    </style>
+    <p id='aaa'>ici</p>
+    <div id="parent">
+        <canvas id="canvas" class="canvas" width="320" height="100"></canvas>
+    </div>
+
+    <script>
+
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext('2d');
+        var image = new Image();
+        image.src = "images/houses.png";
+
+        canvas.height = image.height;
+        canvas.width = image.width;
+        context.drawImage(image,0,0);
+
+        canvas.addEventListener('click', function(event) {
+
+    var totalOffsetX = 0;
+    var totalOffsetY = 0;
+    var canvasX = 0;
+    var canvasY = 0;
+    var currentElement = document.getElementById('parent');
+
+    do{
+        totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+        totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+    }
+    while(currentElement = currentElement.offsetParent)
+
+    canvasX = event.pageX - totalOffsetX;
+    canvasY = event.pageY - totalOffsetY;
+
+document.getElementById('aaa').innerHTML = canvasX + '<br>' + canvasY +  '<br>';
+    /*
+            var elemLeft = canvas.offsetLeft, elemTop = canvas.offsetTop;
+            var x = event.pageX - elemLeft, y = event.pageY - elemTop;
+            document.getElementById('aaa').innerHTML = x + '<br>' + y +  '<br>' + canvas.offsetLeft + '<br>' + canvas.offsetTop + '<br>' + event.pageX + '<br>' + event.pageY + '<br>' ;
+
+            var numberx = Math.floor(x/32);// numero sur la ligne
+            var numbery = Math.floor(y/32);// numero sur la colonne
+            var nbx = image.width/32; // nombre element par ligne
+*/
+        }, false);
+
+        //canvas.width = image.largeurpx;
+        //canvas.height = image.height;
+        
+    </script>
+</body>
+</html>

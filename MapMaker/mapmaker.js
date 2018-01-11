@@ -347,16 +347,30 @@ function selectnewimageforbackground() {
 	}
 
 	canvas2.addEventListener('click', function(event) {
-		var elemLeft = canvas2.offsetLeft, elemTop = canvas2.offsetTop;
-		var x = event.pageX - elemLeft, y = event.pageY - elemTop;
-	
-        	var numberx = Math.floor(x/32);// numero sur la ligne
-		var numbery = Math.floor(y/32);// numero sur la colonne
+
+    	var totalOffsetX = 0;
+    	var totalOffsetY = 0;
+    	var canvasX = 0;
+    	var canvasY = 0;
+
+    	var currentElement = document.getElementById('BGselectedimageDIV');
+    	do{
+        	totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+        	totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+    	}
+    	while(currentElement = currentElement.offsetParent);
+
+    	canvasX = event.pageX - totalOffsetX;
+    	canvasY = event.pageY - totalOffsetY;
+    	
+        var numberx = Math.floor(canvasX/32);// numero sur la ligne
+		var numbery = Math.floor(canvasY/32);// numero sur la colonne
 		var nbx = image.width/32; // nombre element par ligne
 
 		context3.clearRect(0, 0,32, 32);
 		context3.drawImage(image, 32*numberx,32*numbery, 32, 32, 0, 0, 32, 32);
 		document.getElementById("BGtilenumber").innerHTML = numbery*nbx + numberx + 1;
+
 	}, false);
 }
 
@@ -385,16 +399,30 @@ function selectnewimageforfirstground() {
 	}
 
 	canvas5.addEventListener('click', function(event) {
-		var elemLeftbis = canvas5.offsetLeft, elemTopbis = canvas5.offsetTop;
-		var xbis = event.pageX - elemLeftbis, ybis = event.pageY - elemTopbis;
-	
-        	var numberxbis = Math.floor(xbis/32);// numero sur la ligne
-		var numberybis = Math.floor(ybis/32);// numero sur la colonne
+
+		var totalOffsetX2 = 0;
+    	var totalOffsetY2 = 0;
+    	var canvasX2 = 0;
+    	var canvasY2 = 0;
+
+    	var currentElement2 = document.getElementById('FGselectedimageDIV');
+    	do{
+        	totalOffsetX2 += currentElement2.offsetLeft - currentElement2.scrollLeft;
+        	totalOffsetY2 += currentElement2.offsetTop - currentElement2.scrollTop;
+    	}
+    	while(currentElement2 = currentElement2.offsetParent);
+
+    	canvasX2 = event.pageX - totalOffsetX2;
+    	canvasY2 = event.pageY - totalOffsetY2;
+    	
+        var numberxbis = Math.floor(canvasX2/32);// numero sur la ligne
+		var numberybis = Math.floor(canvasY2/32);// numero sur la colonne
 		var nbxbis = image2.width/32; // nombre element par ligne
 
 		context6.clearRect(0, 0,32, 32);
 		context6.drawImage(image2, 32*numberxbis,32*numberybis, 32, 32, 0, 0, 32, 32);
 		document.getElementById("FGtilenumber").innerHTML = numberybis*nbxbis + numberxbis + 1;
+		
 	}, false);
 }
 

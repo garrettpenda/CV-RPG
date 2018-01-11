@@ -22,16 +22,24 @@ function Map(numero, background,firstground, matrice, personnages, pancartes){
 	// ordonner les personnage par Y croissant
 	this.personnages.sort(function(a, b){return a.posy-b.posy});
 
+}
+
+// changer de carte
+Map.prototype.changer = function(numero) {
+
+	var splitdd = numero.split("/");
+	joueur.posx = Number(splitdd[1]);
+	joueur.posy = Number(splitdd[2]);
+	joueur.direction = Number(splitdd[3]);
+	carte = window["MAP" + splitdd[0]];
+	
 	// les cases avec des personnages deviennent des murs
-	for( var p=0;p<this.personnages.length;p++){
-		this.matrice[this.personnages[p].posy][this.personnages[p].posx]=1;
+	for( var p=0;p<carte.personnages.length;p++){
+		carte.matrice[carte.personnages[p].posy][carte.personnages[p].posx]=1;
 	}
 
-	// les cases avec des pancartes deviennent des murs
-	for( var p=0;p<this.pancartes.length;p++){
-		this.matrice[this.pancartes[p].posy][this.pancartes[p].posx]=1;
-	}
 }
+
 
 // dessiner une carte
 Map.prototype.dessiner = function(){

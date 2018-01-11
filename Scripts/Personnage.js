@@ -71,6 +71,7 @@ Personnage.prototype.deplacer = function(sens,carte){
 
 	// vérifie la collision avant le déplacement
 	if ( this.collision(sens,carte) ){
+		this.direction = sens;
 		return false;
 	}
 
@@ -273,7 +274,7 @@ Personnage.prototype.parler = function(carte){
 
 // TODO proposer à des gens réels de laisser leur coordonnées.
 // TODO mettre tous ca dans un document a part peut etre?
-var joueur = new Personnage('Joueur',"Joueur.png",3 ,3 , DIRECTION.BAS,0,true,false,"Il n'y a personne avec qui parler ici.")
+var joueur = new Personnage('Joueur',"Joueur.png",3 ,2 , DIRECTION.BAS,0,true,false,"Il n'y a personne avec qui parler ici.")
 
 // map 01
 var tony = new Personnage('Tony',"Tony.png", 11, 1 , DIRECTION.DROITE ,0,true,false,"Bonjour ! // Bienvenue dans le CV RPG de Garrett. // Tu y trouvera bien sur / des informations sur sa carrière mais aussi / si tu parles avec les gens, des informations plus personnelles. / Ce jeu est construit comme une frise chronologique. // A savoir que tu te déplace dans sa vie // temporellement de haut en bas et spatialement de gauche à droite. / Si tu veux savoir a quel endroit ou annee tu te trouves, // lis les pancartes. / Tu devrais aussi aller voir Sheila // pour un autre conseil.")
@@ -285,13 +286,14 @@ var Constant = new  Personnage('Constant',"Sheila.png", 16, 10 , DIRECTION.DROIT
 var Romain = new Personnage('Romain',"Sheila.png", 17, 11 , DIRECTION.HAUT ,0,true,true,"Ma main n'est pas geniale, // j'espere que mon partenaire // a un meilleur jeu.");
 var Jeremie = new Personnage('Jeremie',"Sheila.png", 17, 9 , DIRECTION.BAS ,0,true,true,"120 coeur.")
 
-var Vincent = new Personnage('Vincent',"Tony.png", 2, 8 , DIRECTION.HAUT ,0,true,true,"Bonjour, je m'apelle Vincent. / J'étais dans le master modelisation et calcul // scientifique avec Garrett. / Moi et Garrett avons gardé contact. // On joue souvent à Starcraft ensemble. / Il joue terran et moi zerg. / Demande lui son battle tag si tu veux ausi jouer avec lui.")
+var Vincent = new Personnage('Vincent',"Tony.png", 4, 8 , DIRECTION.HAUT ,0,true,true,"Bonjour, je m'apelle Vincent. / J'étais dans le master modelisation et calcul // scientifique avec Garrett. / Moi et Garrett avons gardé contact. // On joue souvent à Starcraft ensemble. / Il joue terran et moi zerg. / Demande lui son battle tag si tu veux ausi jouer avec lui.")
 
 
-var Mederic = new Personnage('Mederic',"Tony.png", 3, 3, DIRECTION.BAS ,0,true,true,"Bonjour, je suis  Mederic, le responsable du master // modélisation et calcul scinetifique ou MCS. / Le but du master est de faire de l'informatique // applique a la physique. // Par exemple, simuler des modeles de populations, //  des torsions de poutres en metal ou // encore des ondes comme de vagues ou des tremblement de terres. / Ce master donc principalement acces sur la pysique // mais avec des notions d'informatiques.")
+var Mederic = new Personnage('Mederic',"Tony.png", 5, 2, DIRECTION.BAS ,0,true,true,"Bonjour, je suis  Mederic, le responsable du master // modélisation et calcul scinetifique ou MCS. / Le but du master est de faire de l'informatique // applique a la physique. // Par exemple, simuler des modeles de populations, //  des torsions de poutres en metal ou // encore des ondes comme de vagues ou des tremblement de terres. / Ce master donc principalement acces sur la pysique // mais avec des notions d'informatiques.")
 
 var Simon = new Personnage('Simon',"Tony.png", 2, 8 , DIRECTION.HAUT ,0,true,true,"Bonjour, je m'apelle Simon. / J'ai rejoint Garrett et Vincent dans le master MCS en deuxième année. / Tu as surement remarqué que cette carte est la même que la précédente. / C'est parce que nos cours étais dans la même salle // sauf qu'il ont réparé l'ascenseur. / Nous n'avions plus à monter à chaque fois les 5 étages à pied. / Quel soulagement !")
 
 var Reparateur = new Personnage('Reparateur',"Tony.png", 5, 2 , DIRECTION.DROITE ,0,true,true,"L'ascenseur est cassé. // Il sera réparé d'ici à l'année prochaine. / Si tu veux en savoir plus sur la classe du M2 // de Garrett, tu vas devoir monter les 4 étages à // pied. / Je sais, c'est long mais Garrett l'as bien // fait pendant toute l'année sans compter les précédentes. / Le pauvre, déjà qu'il se levait à 6h tout les jours // pour avoir son bus...")
 
+var Remi = new Personnage('Remi',"Tony.png", 2, 4 , DIRECTION.HAUT ,0,true,true, "Je suis Rémi.")
 

@@ -1,22 +1,22 @@
 
 // ===================================================		   
-// ====================== MAP 13 =====================
+// ====================== MAP 14 =====================
 // ===================================================
 		    
 // collision	
-var MAP13COLLISION=[
+var MAP14COLLISION=[
 [ 1, 1, 1, 1, 1, 1, 1],
 [ 1, 0, 0, 0, 0, 0, 1],
 [ 1, 0, 0, 0, 0, 0, 1],
 [ 1, 0, 0, 0, 0, 0, 1],
 [ 1, 0, 0, 0, 0, 0, 1],
-[ 1, 1, "12/02/04/3", 1, "14/04/04/3", 1, 1]];
+[ 1, 1, "15/02/04/3", 1, "13/04/04/3", 1, 1]];
 
 // liste des personnages
-var MAP13PERSO = [joueur]; //, Vincent, Mederic];
+var MAP14PERSO = [joueur]; //, Vincent, Mederic];
 
 // liste des pancartes
-var MAP13PANCARTE = [pancarte13];
+var MAP14PANCARTE = [pancarte14];
 		   
 // définition des sprites		   
-var MAP13 = new Map(13 , "map13background.png","map13firstground.png", MAP13COLLISION, MAP13PERSO, MAP13PANCARTE);
+var MAP14 = new Map(14 , "map14background.png","map14firstground.png", MAP14COLLISION, MAP14PERSO, MAP14PANCARTE);
