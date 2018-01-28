@@ -1,0 +1,16 @@
+
+// ===================================================		   
+// ====================== MAP __Number__ =====================
+// ===================================================
+
+// collision	
+var MAP__Number__COLLISION=__CollisionMap__;
+
+// liste des personnages
+var MAP__Number__PERSO = [joueur];
+
+// liste des pancartes
+var MAP__Number__PANCARTE = [];
+
+// définition des sprites		   
+var MAP__Number__ = new Map(__Number__ , "map__Number__background.png", "map__Number__firstground.png", MAP__Number__COLLISION, MAP__Number__PERSO, MAP__Number__PANCARTE);

@@ -8,7 +8,7 @@ var context2 = canvas2.getContext('2d');
 context2.font = "15px Arial";
 
 // définition de la carte
-var carte = MAP10;
+var carte = MAP19;
 // les cases avec des personnages deviennent des murs
 for( var p=0;p<carte.personnages.length;p++){
 	carte.matrice[carte.personnages[p].posy][carte.personnages[p].posx]=1;

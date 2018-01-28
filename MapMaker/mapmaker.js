@@ -283,6 +283,11 @@ function exportresults(){
 	document.getElementById("downloadBG").click();
 	document.getElementById("downloadFG").click();
 	download(JSON.stringify(result),'map' + document.getElementById("mapnumber").value + '.json','application/json')
+
+    var text = '// ===================================================\n// ====================== MAP __Number__ =====================\n// ===================================================\n\n// collision	\nvar MAP__Number__COLLISION=__CollisionMap__;\n\n// liste des personnages\nvar MAP__Number__PERSO = [joueur];\n\n// liste des pancartes\nvar MAP__Number__PANCARTE = [];\n\n// définition des sprites		\nvar MAP__Number__ = new Map(__Number__ , "map__Number__background.png", "map__Number__firstground.png", MAP__Number__COLLISION, MAP__Number__PERSO, MAP__Number__PANCARTE);';
+	text = text.replace(/__Number__/g, document.getElementById('mapnumber').value);
+	text = text.replace('__CollisionMap__', document.getElementById('matCOLLISION').innerHTML.replace(/<br>/g,'\n').replace(/collisionmap=/g,''));
+	download(text, 'Carte' + document.getElementById("mapnumber").value + '.js','javascript')
 }
 
 function getjsonmap ( name, imageurl, matrice) {
