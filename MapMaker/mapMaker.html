@@ -24,14 +24,13 @@
 		<input type="button" value="Cacher/Montrer" id="hideshowglobalparameters" onclick="hideshow('globalparameters')" />
 	</div>
 	<div id="globalparameters">
-		<input type="text" id="longueur" value="10" >longueur carte</input><br>
-		<input type="text" id="largeur" value="10" >largeur carte</input><br>
+		<input type="text" id="longueur" value="10">longueur carte</input><br>
+		<input type="text" id="largeur" value="10">largeur carte</input><br>
+		<input type="button" value="Ajuster les dimensions" id="resize" onclick="resizeCanvas()"/><br>
 		<input type="text" id="mapnumber" value="1" >numero carte</input><br>
 		<input type="button" value="Exporter  resultats" id="exportbutton" onclick="exportresults()"/><br>
 		<input id="file" type="file"/><br>
 		<p id="jsonresult">test</p><br>
-		<input type="button" value="augmenter longueur" id="azert" onclick=""/><br>
-		<input type="button" value="augmenter largeur" id="hideaqswsdshowbg" onclick="alert('non disponible')"/><br>
 	</div>
 
 	<div id="mapsandresults">
@@ -78,6 +77,8 @@
 						<input type="radio" name="BG" id="imgBG5" onclick="selectnewimageforbackground()">
 						<input type="text" id="imageBG5" value="decors2.png" >image5</input>
 						<input type="checkbox" id="cboxBG5" checked onclick="drawbackgroundimage()"> </input><br>
+
+						<input type="button" value="TODO : Ajouter une couche" id="addBGinput" onclick=""/><br>
 					</form>
 				</div>
 
@@ -124,26 +125,29 @@
 						<input type="checkbox" id="cboxFGcad1" onclick="drawfirstgroundimage()" checked> cadrillage1</input><br>
 						<input type="checkbox" id="cboxFGcad2" onclick="selectnewimageforfirstground()" checked>cadrillage2 </input><br>
 				</div>
+				
 				<div class="center">
 						<input type="radio" name="FG" id="imgFG1" checked onclick="selectnewimageforfirstground()">
 						<input type="text" id="imageFG1" value="decors2.png" >image1</input>
-						<input type="checkbox" id="cboxFG1" checked> </input><br>
+						<input type="checkbox" id="cboxFG1" checked onclick="drawfirstgroundimage()"> </input><br>
 
 						<input type="radio" name="FG" id="imgFG2" onclick="selectnewimageforfirstground()">
 						<input type="text" id="imageFG2" value="decors2.png" >image2</input>
-						<input type="checkbox" id="cboxFG2" checked> </input><br>
+						<input type="checkbox" id="cboxFG2" checked onclick="drawfirstgroundimage()"> </input><br>
 
 						<input type="radio" name="FG" id="imgFG3" onclick="selectnewimageforfirstground()">
 						<input type="text" id="imageFG3" value="decors2.png" >image3</input>
-						<input type="checkbox" id="cboxFG3" checked> </input><br>
+						<input type="checkbox" id="cboxFG3" checked onclick="drawfirstgroundimage()"> </input><br>
 
 						<input type="radio" name="FG" id="imgFG4" onclick="selectnewimageforfirstground()">
 						<input type="text" id="imageFG4" value="decors2.png" >image4</input>
-						<input type="checkbox" id="cboxFG4" checked> </input><br>
+						<input type="checkbox" id="cboxFG4" checked onclick="drawfirstgroundimage()"> </input><br>
 
 						<input type="radio" name="FG" id="imgFG5" onclick="selectnewimageforfirstground()">
 						<input type="text" id="imageFG5" value="decors2.png" >image5</input>
-						<input type="checkbox" id="cboxFG5" checked> </input><br>
+						<input type="checkbox" id="cboxFG5" checked onclick="drawfirstgroundimage()"> </input><br>
+
+						<input type="button" value="TODO : Ajouter une couche" id="addBGinput" onclick=""/><br>
 					</form>
 				</div>
 				<div class="right">

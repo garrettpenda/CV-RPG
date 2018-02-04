@@ -4,8 +4,8 @@
 
 // get the dimensions
 
-var long = document.getElementById("longueur").value;
-var larg = document.getElementById("largeur").value;
+var longu = parseInt(document.getElementById("longueur").value);
+var larg = parseInt(document.getElementById("largeur").value);
 var mapnumber = document.getElementById("mapnumber").value;
 
 // canvas arriere plan
@@ -19,7 +19,7 @@ var context2 = canvas2.getContext('2d');
 var canvas3 = document.getElementById("BGselectedTile");
 var context3 = canvas3.getContext('2d');
 
-canvas.width = long*32;
+canvas.width = longu*32;
 canvas.height = larg*32;
 
 // canvas premier plan
@@ -36,29 +36,29 @@ var context6 = canvas6.getContext('2d');
 var canvas7 = document.getElementById("resultImage");
 var context7 = canvas7.getContext('2d');
 
-canvas4.width = long*32;
+canvas4.width = longu*32;
 canvas4.height = larg*32;
 
-canvas7.width = long*32;
+canvas7.width = longu*32;
 canvas7.height = larg*32;
 
 
 // fill the matrices with 0
-var pathmap = initialisermatrice(long,larg,2);
-var arrowmap= initialisermatrice(long,larg,0);
-var collisionmap=initialisermatrice(long,larg,0);
+var pathmap = initialisermatrice(longu,larg,2);
+var arrowmap= initialisermatrice(longu,larg,0);
+var collisionmap=initialisermatrice(longu,larg,0);
 
-var mapbg1=initialisermatrice(long,larg,0);
-var mapbg2=initialisermatrice(long,larg,0);
-var mapbg3=initialisermatrice(long,larg,0);
-var mapbg4=initialisermatrice(long,larg,0);
-var mapbg5=initialisermatrice(long,larg,0);
+var mapbg1=initialisermatrice(longu,larg,0);
+var mapbg2=initialisermatrice(longu,larg,0);
+var mapbg3=initialisermatrice(longu,larg,0);
+var mapbg4=initialisermatrice(longu,larg,0);
+var mapbg5=initialisermatrice(longu,larg,0);
 
-var mapfg1=initialisermatrice(long,larg,0);
-var mapfg2=initialisermatrice(long,larg,0);
-var mapfg3=initialisermatrice(long,larg,0);
-var mapfg4=initialisermatrice(long,larg,0);
-var mapfg5=initialisermatrice(long,larg,0);
+var mapfg1=initialisermatrice(longu,larg,0);
+var mapfg2=initialisermatrice(longu,larg,0);
+var mapfg3=initialisermatrice(longu,larg,0);
+var mapfg4=initialisermatrice(longu,larg,0);
+var mapfg5=initialisermatrice(longu,larg,0);
 
 drawbackgroundimage();
 selectnewimageforbackground();
@@ -95,6 +95,7 @@ canvas.addEventListener('click', function(event) {
 		pathmap[numbery][numberx] =  document.getElementById("BGtilenumber").innerHTML;
 	} else if (document.getElementById("arrows").checked) {
 		arrowmap[numbery][numberx] =  document.getElementById("BGtilenumber").innerHTML;
+		collisionmap[numbery][numberx] = 'XXX';
 	} else if (document.getElementById("collision").checked) {
 		collisionmap[numbery][numberx] = 1 - collisionmap[numbery][numberx];
 	}
@@ -129,7 +130,6 @@ canvas4.addEventListener('click', function(event) {
 	}
 
 	drawfirstgroundimage();
-
 
 	drawresultimage ();
 
@@ -184,6 +184,91 @@ function dessinercadrillage( canvasname, contextname ){
 		contextname.lineTo(32*i,canvasname.height);
 		contextname.stroke();
 	}
+}
+
+function resizeCanvas(){
+	var newlongu = parseInt(document.getElementById("longueur").value);
+	var newlarg = parseInt(document.getElementById("largeur").value);
+
+	canvas.width = newlongu*32;
+	canvas.height = newlarg*32;
+
+	canvas4.width = newlongu*32;
+	canvas4.height = newlarg*32;
+
+	canvas7.width = newlongu*32;
+	canvas7.height = newlarg*32;
+
+	if (longu < newlongu) {
+		while (longu < newlongu) {
+			ajouterColonne(pathmap, 2);
+			ajouterColonne(arrowmap, 0);
+			ajouterColonne(collisionmap, 0);
+
+			ajouterColonne(mapbg1, 0);
+			ajouterColonne(mapbg2, 0);
+			ajouterColonne(mapbg3, 0);
+			ajouterColonne(mapbg4, 0);
+			ajouterColonne(mapbg5, 0);
+
+			ajouterColonne(mapfg1, 0);
+			ajouterColonne(mapfg2, 0);
+			ajouterColonne(mapfg3, 0);
+			ajouterColonne(mapfg4, 0);
+			ajouterColonne(mapfg5, 0);
+			longu = longu + 1
+		}
+	} else if (longu > newlongu) {
+		alert('il va faloir sauver et recharger la page pour le moment');
+	}
+
+	if (larg < newlarg) {
+		while (larg < newlarg) {
+			ajouterLigne(pathmap, 2);
+			ajouterLigne(arrowmap, 0);
+			ajouterLigne(collisionmap, 0);
+
+			ajouterLigne(mapbg1, 0);
+			ajouterLigne(mapbg2, 0);
+			ajouterLigne(mapbg3, 0);
+			ajouterLigne(mapbg4, 0);
+			ajouterLigne(mapbg5, 0);
+
+			ajouterLigne(mapfg1, 0);
+			ajouterLigne(mapfg2, 0);
+			ajouterLigne(mapfg3, 0);
+			ajouterLigne(mapfg4, 0);
+			ajouterLigne(mapfg5, 0);
+			larg = larg + 1
+		}
+	} else if (larg > newlarg) {
+		alert('il va faloir sauver et recharger la page pour le moment');
+	}
+
+	drawbackgroundimage();
+	selectnewimageforbackground();
+	drawfirstgroundimage();
+	selectnewimageforfirstground();
+	drawresultimage();
+
+}
+
+function ajouterColonne( matrice, number){
+
+	for(j=0;j< matrice.length;j++){
+		matrice[j].push(number);
+	}
+
+}
+
+function ajouterLigne( matrice ,number){
+
+	var line = [];
+	for(i=0;i< matrice[0].length;i++){
+		line.push(number);
+   	}
+   	matrice.push(line);
+
 }
 
 // intialiser une matrice
@@ -271,12 +356,13 @@ function exportresults(){
 	matrices.push(getjsonmap('mapfg4', document.getElementById("imageFG4").value, mapfg4));
 	matrices.push(getjsonmap('mapfg5', document.getElementById("imageFG5").value, mapfg5));
 
-	var result = {"mapnumber": mapnumber, "long":long , "larg":larg, "matrices": matrices};
+	var result = {"mapnumber": mapnumber, "long":longu , "larg":larg, "matrices": matrices};
 
 	//document.getElementById('jsonresult').innerHTML = JSON.stringify(result);
 
 	document.getElementById("cboxBGcad1").checked = false;
 	document.getElementById("cboxFGcad1").checked = false;
+	document.getElementById("cboxcollision").checked = false;
 	drawbackgroundimage();
 	drawfirstgroundimage();
 
@@ -562,7 +648,7 @@ function importresults(text) {
 	var jsonresult = JSON.parse(text);
 	
 
-	long = jsonresult.long;
+	longu = jsonresult.long;
 	larg = jsonresult.larg;
 	mapnumber = jsonresult.mapnumber;
 	
