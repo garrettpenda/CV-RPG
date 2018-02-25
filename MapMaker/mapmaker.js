@@ -97,7 +97,13 @@ canvas.addEventListener('click', function(event) {
 		arrowmap[numbery][numberx] =  document.getElementById("BGtilenumber").innerHTML;
 		collisionmap[numbery][numberx] = 'XXX';
 	} else if (document.getElementById("collision").checked) {
-		collisionmap[numbery][numberx] = 1 - collisionmap[numbery][numberx];
+
+		if (collisionmap[numbery][numberx] == 1 || collisionmap[numbery][numberx] == 0) {
+			collisionmap[numbery][numberx] = 1 - collisionmap[numbery][numberx];
+		} else {
+			collisionmap[numbery][numberx] = 1;
+		}
+		
 	}
 
 	drawbackgroundimage();
@@ -272,13 +278,13 @@ function ajouterLigne( matrice ,number){
 }
 
 // intialiser une matrice
-function initialisermatrice( long, larg, value ){
+function initialisermatrice( longu, larg, value ){
 
 	var result=[];
 
 	for(j=0;j< larg;j++){
 		var line = [];
-		for(i=0;i< long;i++){
+		for(i=0;i< longu;i++){
 			line.push(value);
    		}
    		result.push(line);
@@ -652,7 +658,7 @@ function importresults(text) {
 	larg = jsonresult.larg;
 	mapnumber = jsonresult.mapnumber;
 	
-	document.getElementById("longueur").value = long;
+	document.getElementById("longueur").value = longu;
 	document.getElementById("largeur").value = larg;
 	document.getElementById("mapnumber").value = mapnumber;
 

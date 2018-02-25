@@ -30,3 +30,6 @@ var pancarte14 = new Pancarte(4, 0 ,0,"Année 2014 // Ville de Nice // Fac de sc
 var pancarte15 = new Pancarte(4, 0 ,0,"Année 2014 // Ville de Nice // Fac de science de Valrose. // Batiment de physique // 3eme etage");
 var pancarte16 = new Pancarte(4, 0 ,0,"Année 2014 // Ville de Nice // Fac de science de Valrose. // Batiment de physique // 4eme etage");
 var pancarte18 = new Pancarte(7, 9 ,0,"Année 2014 // Sophia Antipolis // INLN");
+
+
+var pancarte24 = new Pancarte(2, 1 ,0,"Choisir un étage.");

@@ -262,6 +262,9 @@ Personnage.prototype.parler = function(carte){
 		textetaille=1;
 	}
 
+	// TODO FAIRE action d'un personnage ou d'une pancarte apres le dialogue
+	// faire un inventaire que les personnages peuvent remplir
+
 }
 
 
@@ -274,7 +277,7 @@ Personnage.prototype.parler = function(carte){
 
 // TODO proposer à des gens réels de laisser leur coordonnées.
 // TODO mettre tous ca dans un document a part peut etre?
-var joueur = new Personnage('Joueur',"Joueur.png",11 ,4 , DIRECTION.BAS,0,true,false,"Il n'y a personne avec qui parler ici.")
+var joueur = new Personnage('Joueur',"Joueur.png",03 ,3 , DIRECTION.BAS,0,true,false,"Il n'y a personne avec qui parler ici.")
 
 // map 01
 var tony = new Personnage('Tony',"Tony.png", 11, 1 , DIRECTION.DROITE ,0,true,false,"Bonjour ! // Bienvenue dans le CV RPG de Garrett. // Tu y trouvera bien sur / des informations sur sa carrière mais aussi / si tu parles avec les gens, des informations plus personnelles. / Ce jeu est construit comme une frise chronologique. // A savoir que tu te déplace dans sa vie // temporellement de haut en bas et spatialement de gauche à droite. / Si tu veux savoir a quel endroit ou annee tu te trouves, // lis les pancartes. / Tu devrais aussi aller voir Sheila // pour un autre conseil.")
